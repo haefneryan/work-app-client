@@ -7,7 +7,7 @@ function Navbar() {
             <nav>
                 <ul>
                     {/* <li><Link to='/'>ALL ORDERS</Link></li> */}
-                    <li><Link to='/triage'>TRIAGE</Link></li>
+                    <li><Link to='/'>TRIAGE</Link></li>
                     <li><Link to='/dashboard'>DASHBOARD</Link></li>
                     <li><Link to='/completed'>COMPLETED</Link></li>
                     <li><Link to='/create-new-order'>CREATE NEW ORDER</Link></li>
