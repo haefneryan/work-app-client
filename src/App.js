@@ -176,8 +176,8 @@ const App = () => {
           <Navbar />
           <h1>SCHEDULING TOOL</h1>
           <Routes>
-            <Route path='/' element={<AllOrders orders={orders} triageOrders={triageOrders} deleteOrder={deleteOrder} />}></Route>
-            <Route path='/triage' element={<Triage triageOrders={triageOrders} updateWorkload={updateWorkload} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateTriageComplete={updateTriageComplete} deleteOrder={deleteOrder}/>}></Route>
+            <Route path='/allorders' element={<AllOrders orders={orders} triageOrders={triageOrders} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateWorkload={updateWorkload} deleteOrder={deleteOrder}/>}></Route>
+            <Route path='/' element={<Triage triageOrders={triageOrders} updateWorkload={updateWorkload} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateTriageComplete={updateTriageComplete} deleteOrder={deleteOrder}/>}></Route>
             <Route path='/dashboard' element={<Dashboard dashboardOrders={dashboardOrders} updateOwner={updateOwner} updateBuildTime={updateBuildTime} deleteOrder={deleteOrder} updateDesignComplete={updateDesignComplete}/>}></Route>
             <Route path='/completed' element={<Completed completedOrders={completedOrders} deleteOrder={deleteOrder}/>}></Route>
             <Route path='/create-new-order' element={<AddOrder addOrder={addOrder}/>}></Route>

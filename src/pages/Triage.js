@@ -9,7 +9,7 @@ function Triage(props) {
 
     return (
         <div>
-            <h3>TRIAGE ({triageOrders.length}) TEST</h3>
+            <h3>TRIAGE ({triageOrders.length})</h3>
             <table>
                 <thead>
                     <tr>
