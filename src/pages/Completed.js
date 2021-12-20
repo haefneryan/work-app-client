@@ -4,6 +4,7 @@ import TableHeaders from '../components/layout/Table/TableHeaders'
 //import classes from './AllOrders.css'
 
 function Completed(props) {
+    document.title = 'Scheduling Tool - Completed';
     const { completedOrders, deleteOrder } = props;
 
     return (
@@ -31,10 +32,9 @@ function Completed(props) {
                                 <td>{order.designcomplete}</td>
                                 <td>{order.duedate}</td>
                                 <td><button disabled>COMPLETE</button></td>
+                                <td><button disabled>SEND BACK</button></td>
                                 <td><button disabled>COMPLETE</button></td>
                                 <td><button onClick={() => deleteOrder(order)}>X</button></td>
-                                <td>-</td>
-                                <td>-</td>
                             </tr>
                         )
                     })}

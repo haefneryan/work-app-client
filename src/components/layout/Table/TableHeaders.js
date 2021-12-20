@@ -15,6 +15,7 @@ function TableHeaders() {
             <td>Design Complete</td>
             <td>Due Date</td>
             <td>Triage Complete</td>
+            <td>Send back to Triage</td>
             <td>Design Complete</td>
             <td>Delete</td>
         </>

@@ -5,7 +5,8 @@ import EngineerSelect from '../components/selects/EngineerSelect';
 import classes from './AllOrders.css'
 
 function Dashboard(props) {
-    const { dashboardOrders, deleteOrder, updateOwner, updateDesignComplete, updateBuildTime } = props;
+    document.title = 'Scheduling Tool - Dashboard';
+    const { dashboardOrders, deleteOrder, updateOwner, updateDesignComplete, updateBuildTime, backToTriage } = props;
 
     return (
         <div>
@@ -37,6 +38,7 @@ function Dashboard(props) {
                                 <td>{order.designcomplete}</td>
                                 <td>{order.duedate}</td>
                                 <td><button disabled>COMPLETE</button></td>
+                                <td><button onClick={() => backToTriage(order)}>SEND BACK</button></td>
                                 <td><button onClick={() => updateDesignComplete(order)}>COMPLETE</button></td>
                                 <td><button onClick={() => deleteOrder(order)}>X</button></td>
                             </tr>

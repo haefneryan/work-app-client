@@ -5,6 +5,7 @@ import EngineerSelect from '../components/selects/EngineerSelect';
 //import classes from './AllOrders.css'
 
 function Triage(props) {
+    document.title = 'Scheduling Tool - Triage';
     const { triageOrders, deleteOrder, updateWorkload, updateTriageOwner, updateOwner, updateTriageComplete } = props;
 
     return (
@@ -40,6 +41,7 @@ function Triage(props) {
                                 <td>{order.designcomplete}</td>
                                 <td>{order.duedate}</td>
                                 <td><button onClick={() => updateTriageComplete(order)}>COMPLETE</button></td>
+                                <td><button disabled>SEND BACK</button></td>
                                 <td><button disabled>COMPLETE</button></td>
                                 <td><button onClick={() => deleteOrder(order)}>X</button></td>
                             </tr>

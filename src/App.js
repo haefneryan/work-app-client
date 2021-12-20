@@ -5,6 +5,7 @@ import Navbar from './components/layout/Navbar';
 import AllOrders from './pages/AllOrders';
 import AddOrder from './pages/AddOrder';
 import Triage from './pages/Triage';
+import TriageTest from './pages/TriageTest';
 import Dashboard from './pages/Dashboard';
 import Completed from './pages/Completed';
 
@@ -14,15 +15,11 @@ require('dotenv').config();
 const App = () => {
   let url;
   const port = process.env.REACT_APP_PORT || 4000;
-  console.log(process.env.REACT_APP_PORT);
-  console.log(process.env.REACT_APP_NODE_ENV);
   if (process.env.REACT_APP_NODE_ENV === 'development') {
     url = `http://localhost:${port}`;
   } else {
     url = 'https://stormy-plateau-67088.herokuapp.com';
   }
-  //const url = 'http://localhost:5000/'
-  console.log(url);
   const [orders, setOrders] = useState({});
   const [triageOrders, setTriageOrders] = useState({});
   const [dashboardOrders, setDashboardOrders] = useState({});
@@ -32,12 +29,15 @@ const App = () => {
  
   useEffect(() => {   
     getOrders();
-  }, []);
+    console.log('url')
+  }, [url]);
 
   useEffect(() => {
     renderCount.current++
     if(renderCount.current > 0 && orders.length > 0) {
+      setOrders(orders)
       setFilters(orders);
+      console.log('orders')
     }
   }, [orders])
 
@@ -93,7 +93,10 @@ const App = () => {
   const updateWorkload = (order, e) => { 
     axios
     .put(`${url}/${order._id}`, { workload: e.target.value })
-    .then(getOrders())
+    .then(
+      setOrders(orders),
+      console.log(orders)
+    )
     .catch(error => console.log(error))
   }
 
@@ -105,14 +108,18 @@ const App = () => {
       .catch(error => console.log(error))
   }
 
-  const updateTriageOwner = (order, e) => {  
-    axios
+  const updateTriageOwner = async (order, e) => {
+    await axios
     .put(`${url}/${order._id}`, { triageowner: e.target.value })
-    .then(getOrders())
+    .then(
+      getOrders(),
+      setOrders(orders)
+    )
+    //.then(getOrders())
     .catch(error => console.log(error))
   }
   
-  const updateOwner = (order, e) => {    
+  const updateOwner = (order, e) => {
     axios
       .put(`${url}/${order._id}`, { owner: e.target.value })
       .then(getOrders())
@@ -129,18 +136,21 @@ const App = () => {
   }
 
   const updateTriageComplete = (order) => {
+    console.log(order)
     let today = getToday()
-    if (order.triageowner === 'None') {
-      alert('Please select a triage owner')
-    } else if (order.workload === null || order.workload.length === 0) {
-      alert('Please enter a workload')
-    } else {
-      axios
-        .put(`${url}/${order._id}`, { triagecomplete: today })
-        .then(getOrders())
-        .catch(error => console.log(error))
-      alert(`Order has been marked with triage date of ${today}`)
-    }
+      if (order.triageowner === 'None') {
+        alert('Please select a triage owner')
+      } else if (order.workload === null || order.workload.length === 0) {
+        alert('Please enter a workload')
+      } else {
+        if (window.confirm('Are you sure you want to complete Triage?')) {
+          axios
+            .put(`${url}/${order._id}`, { triagecomplete: today })
+            .then(getOrders())
+            .catch(error => console.log(error))
+          alert(`Order has been marked with triage date of ${today}`)
+        }
+      }
   }
 
   const updateDesignComplete = (order) => {
@@ -157,10 +167,25 @@ const App = () => {
     }
   }
 
+  const backToTriage = (order) => {
+    let r = window.confirm('Are you sure you want to send this order back to Triage?')
+    if(r) {
+      axios
+        .put(`${url}/${order._id}`, { triagecomplete: null })
+        .then(getOrders())
+        .catch(error => console.log(error))
+    }
+
+  }
+
   const setFilters = (orders) => {
     setTriageOrders(orders.filter((x) => x.triagecomplete === null))
     setDashboardOrders(orders.filter((x) => x.triagecomplete !== null && x.designcomplete === null))
     setCompletedOrders(orders.filter((x) => x.triagecomplete !== null && x.designcomplete !== null))
+  }
+
+  const testFunction = () => {
+    console.log('test')
   }
 
   if(dataLoaded === false)
@@ -173,12 +198,13 @@ const App = () => {
     return (
       <>
         <div className="App">
-          <Navbar />
+          <Navbar triageOrders={triageOrders} dashboardOrders={dashboardOrders} completedOrders={completedOrders}/>
           <h1>SCHEDULING TOOL</h1>
           <Routes>
             <Route path='/allorders' element={<AllOrders orders={orders} triageOrders={triageOrders} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateWorkload={updateWorkload} deleteOrder={deleteOrder}/>}></Route>
             <Route path='/' element={<Triage triageOrders={triageOrders} updateWorkload={updateWorkload} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateTriageComplete={updateTriageComplete} deleteOrder={deleteOrder}/>}></Route>
-            <Route path='/dashboard' element={<Dashboard dashboardOrders={dashboardOrders} updateOwner={updateOwner} updateBuildTime={updateBuildTime} deleteOrder={deleteOrder} updateDesignComplete={updateDesignComplete}/>}></Route>
+            <Route path='/triage-test' element={<TriageTest testFunction={testFunction} triageOrders={triageOrders} updateWorkload={updateWorkload} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateTriageComplete={updateTriageComplete} deleteOrder={deleteOrder}/>}></Route>
+            <Route path='/dashboard' element={<Dashboard dashboardOrders={dashboardOrders} updateOwner={updateOwner} updateBuildTime={updateBuildTime} deleteOrder={deleteOrder} updateDesignComplete={updateDesignComplete} backToTriage={backToTriage} />}></Route>
             <Route path='/completed' element={<Completed completedOrders={completedOrders} deleteOrder={deleteOrder}/>}></Route>
             <Route path='/create-new-order' element={<AddOrder addOrder={addOrder}/>}></Route>
           </Routes>
