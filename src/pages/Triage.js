@@ -6,7 +6,9 @@ import EngineerSelect from '../components/selects/EngineerSelect';
 
 function Triage(props) {
     document.title = 'Scheduling Tool - Triage';
-    const { triageOrders, deleteOrder, updateWorkload, updateTriageOwner, updateOwner, updateTriageComplete } = props;
+    const { triageOrders, deleteOrder, updateWorkload, updateTriageOwner, updateOwner, updateTriageComplete, daysWithOutWeekend } = props;
+
+    console.log(daysWithOutWeekend[0])
 
     return (
         <div>
