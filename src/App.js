@@ -29,7 +29,6 @@ const App = () => {
  
   useEffect(() => {   
     getOrders();
-    console.log('url')
   }, [url]);
 
   useEffect(() => {
@@ -37,7 +36,6 @@ const App = () => {
     if(renderCount.current > 0 && orders.length > 0) {
       setOrders(orders)
       setFilters(orders);
-      console.log('orders')
     }
   }, [orders])
 
@@ -135,11 +133,10 @@ const App = () => {
     return today
   }
 
-  const firstDate = new Date("2021-12-26");
-  const secondDate = new Date("2022-12-30");
+  const endDate = new Date("2030-12-30");
   const daysWithOutWeekend = [];
-  for (let currentDate = new Date(firstDate); currentDate <= secondDate; currentDate.setDate(currentDate.getDate() + 1)) {
-    if (currentDate.getDay() != 0 && currentDate.getDay() != 6) {
+  for (let currentDate = new Date(getToday()); currentDate <= endDate; currentDate.setDate(currentDate.getDate() + 1)) {
+    if (currentDate.getDay() !== 5 && currentDate.getDay() !== 6) {
       daysWithOutWeekend.push(new Date(currentDate).toISOString().slice(0, 10));
     }
   }
@@ -155,27 +152,25 @@ const App = () => {
           await axios
             .put(`${url}/${order._id}`, { 
               triagecomplete: today,
-              duedate: daysWithOutWeekend[0]
+              duedate: daysWithOutWeekend[12]
             })
             .then(
               getOrders(),
               daysWithOutWeekend.splice(0, 1),
-              console.log(daysWithOutWeekend)
             )
             .catch(error => console.log(error))
           alert(`Order has been marked with triage date of ${today}`)
-          console.log('test')
           daysWithOutWeekend.slice(1, 2);
-          console.log(daysWithOutWeekend)
         }
       }
   }
 
   const updateDesignComplete = async (order) => {
+    console.log(order.buildtime)
     let today = getToday()
     if (order.owner === 'None') {
       alert('Please select an owner')
-    } else if (order.buildtime === null || order.buildtime.length === 0) {
+    } else if (order.buildtime === undefined) {
       alert('Please enter a build time')
     } else {
       await axios
@@ -199,6 +194,18 @@ const App = () => {
 
   }
 
+  const backToDesign = (order) => {
+    let r = window.confirm('Are you sure you want to send this order back to Design?')
+    if(r) {
+      axios
+        .put(`${url}/${order._id}`, { 
+          designcomplete: null
+        })
+        .then(getOrders())
+        .catch(error => console.log(error))
+    }
+  }
+
   const setFilters = (orders) => {
     setTriageOrders(orders.filter((x) => x.triagecomplete === null))
     setDashboardOrders(orders.filter((x) => x.triagecomplete !== null && x.designcomplete === null))
@@ -218,11 +225,11 @@ const App = () => {
           <Navbar triageOrders={triageOrders} dashboardOrders={dashboardOrders} completedOrders={completedOrders}/>
           <h1>SCHEDULING TOOL</h1>
           <Routes>
-            <Route path='/allorders' element={<AllOrders orders={orders} triageOrders={triageOrders} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateWorkload={updateWorkload} deleteOrder={deleteOrder}/>}></Route>
-            <Route path='/' element={<Triage triageOrders={triageOrders} updateWorkload={updateWorkload} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateTriageComplete={updateTriageComplete} deleteOrder={deleteOrder} daysWithOutWeekend={daysWithOutWeekend}/>}></Route>
-            <Route path='/triage-test' element={<TriageTest triageOrders={triageOrders} updateWorkload={updateWorkload} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateTriageComplete={updateTriageComplete} deleteOrder={deleteOrder}/>}></Route>
+            <Route path='/allorders' element={<AllOrders orders={orders} triageOrders={triageOrders} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateWorkload={updateWorkload} deleteOrder={deleteOrder} />}></Route>
+            <Route path='/' element={<Triage triageOrders={triageOrders} updateWorkload={updateWorkload} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateTriageComplete={updateTriageComplete} deleteOrder={deleteOrder} daysWithOutWeekend={daysWithOutWeekend} />}></Route>
+            <Route path='/triage-test' element={<TriageTest triageOrders={triageOrders} updateWorkload={updateWorkload} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateTriageComplete={updateTriageComplete} deleteOrder={deleteOrder} />}></Route>
             <Route path='/dashboard' element={<Dashboard dashboardOrders={dashboardOrders} updateOwner={updateOwner} updateBuildTime={updateBuildTime} deleteOrder={deleteOrder} updateDesignComplete={updateDesignComplete} backToTriage={backToTriage} />}></Route>
-            <Route path='/completed' element={<Completed completedOrders={completedOrders} deleteOrder={deleteOrder}/>}></Route>
+            <Route path='/completed' element={<Completed completedOrders={completedOrders} deleteOrder={deleteOrder} backToDesign={backToDesign} />}></Route>
             <Route path='/create-new-order' element={<AddOrder addOrder={addOrder}/>}></Route>
           </Routes>
         </div>
