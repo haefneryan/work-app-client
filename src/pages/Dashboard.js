@@ -2,11 +2,18 @@ import React from 'react'
 import TableHeaders from '../components/layout/Table/TableHeaders'
 import EngineerSelect from '../components/selects/EngineerSelect';
 
-import classes from './AllOrders.css'
+import './AllOrders.css'
+import './Dashboard.css'
 
 function Dashboard(props) {
     document.title = 'Scheduling Tool - Dashboard';
-    const { dashboardOrders, deleteOrder, updateOwner, updateDesignComplete, updateBuildTime, backToTriage } = props;
+    const { dashboardOrders, deleteOrder, updateOwner, updateDesignComplete, updateBuildTime, backToTriage, getToday } = props;
+
+    const checkDueDate = (order) => {
+        let today =  getToday();
+        if (order.duedate === today) { return 'dueDateToday'
+        } else if (order.duedate < today) { return 'dueDateLate' } 
+    }
 
     return (
         <div>
@@ -21,6 +28,7 @@ function Dashboard(props) {
                         <td>Workload</td>
                         <td>Buildtime</td>
                         <td>Triage Complete Date</td>
+                        <td>Design Complete Date</td>
                         <td>Due Date</td>
                         <td>Design Complete</td>
                         <td>Send back to Triage</td>
@@ -41,11 +49,11 @@ function Dashboard(props) {
                                         <EngineerSelect />
                                     </select>
                                 </td>
-                                <td className={classes.workload}>{order.workload}</td>
+                                <td className='workload'>{order.workload}</td>
                                 <td><input type='text' min='1' max='1000' defaultValue={order.buildtime} onChange={(e) => updateBuildTime(order, e)} className='workload'></input></td>
-                                {/* <td><input type='text' min='1' max='1000' defaultValue={order.buildtime} onChange={(e) => updateBuildTime(order, e)} className='buildtime'></input></td> */}
                                 <td>{order.triagecomplete}</td>
-                                <td>{order.duedate}</td>
+                                <td></td>
+                                <td className={`${checkDueDate(order)}`}>{order.duedate}</td>
                                 <td><button onClick={() => updateDesignComplete(order)}>COMPLETE</button></td>
                                 <td><button onClick={() => backToTriage(order)}>SEND BACK</button></td>
                                 <td><button onClick={() => deleteOrder(order)}>X</button></td>

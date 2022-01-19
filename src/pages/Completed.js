@@ -7,6 +7,8 @@ function Completed(props) {
     document.title = 'Scheduling Tool - Completed';
     const { completedOrders, deleteOrder, backToDesign } = props;
 
+    console.log(completedOrders)
+
     return (
         <div>
             <h3>COMPLETED ({completedOrders.length})</h3>
@@ -19,9 +21,9 @@ function Completed(props) {
                         <td>Owner</td>
                         <td>Workload</td>
                         <td>Buildtime</td>
-                        <td>Triage Complete</td>
+                        <td>Triage Complete Date</td>
+                        <td>Design Complete Date</td>
                         <td>Due Date</td>
-                        <td>Design Complete</td>
                         <td>Back to Design</td>
                         <td>Delete</td>
                         <td>Sales Order</td>
@@ -39,8 +41,8 @@ function Completed(props) {
                                 <td>{order.workload}</td>
                                 <td>{order.buildtime}</td>
                                 <td>{order.triagecomplete}</td>
-                                <td>{order.duedate}</td>
                                 <td>{order.designcomplete}</td>
+                                <td>{order.duedate}</td>
                                 <td><button onClick={() => backToDesign(order)}>SEND BACK</button></td>
                                 <td><button onClick={() => deleteOrder(order)}>X</button></td>
                                 <td>-</td>

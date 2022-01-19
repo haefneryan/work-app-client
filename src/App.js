@@ -88,40 +88,26 @@ const App = () => {
     }
   }
 
-  const updateWorkload = (order, e) => { 
-    axios
-    .put(`${url}/${order._id}`, { workload: e.target.value })
-    .then(
-      setOrders(orders),
-      console.log(orders)
-    )
-    .catch(error => console.log(error))
+  const updateWorkload = (order, e) => {
+    setOrders({...orders}, order.workload = e.target.value)
+    axios.put(`${url}/${order._id}`, { workload: e.target.value })
   }
 
   const updateBuildTime = (order, e) => {
-    console.log(e.target.value)   
-    axios
-      .put(`${url}/${order._id}`, { buildtime: e.target.value })
-      .then(getOrders())
-      .catch(error => console.log(error))
+    setOrders({...orders}, order.buildtime = e.target.value)
+    axios.put(`${url}/${order._id}`, { buildtime: e.target.value })
+    console.log(order.buildtime)
+
   }
 
   const updateTriageOwner = async (order, e) => {
-    await axios
-    .put(`${url}/${order._id}`, { triageowner: e.target.value })
-    .then(
-      getOrders(),
-      setOrders(orders)
-    )
-    //.then(getOrders())
-    .catch(error => console.log(error))
+    setOrders({...orders}, order.triageowner = e.target.value)
+    await axios.put(`${url}/${order._id}`, { triageowner: e.target.value })
   }
   
   const updateOwner = (order, e) => {
-    axios
-      .put(`${url}/${order._id}`, { owner: e.target.value })
-      .then(getOrders())
-      .catch(error => console.log(error))
+    setOrders({...orders}, order.owner = e.target.value)
+    axios.put(`${url}/${order._id}`, { owner: e.target.value })
   }
 
   const getToday = () => {
@@ -170,7 +156,7 @@ const App = () => {
     let today = getToday()
     if (order.owner === 'None') {
       alert('Please select an owner')
-    } else if (order.buildtime === undefined) {
+    } else if (order.buildtime === undefined || order.buildtime === '' || order.buildtime === null) {
       alert('Please enter a build time')
     } else {
       await axios
@@ -207,7 +193,7 @@ const App = () => {
   }
 
   const setFilters = (orders) => {
-    setTriageOrders(orders.filter((x) => x.triagecomplete === null))
+    setTriageOrders(orders.filter((x) => x.triagecomplete === null && x.designcomplete === null))
     setDashboardOrders(orders.filter((x) => x.triagecomplete !== null && x.designcomplete === null))
     setCompletedOrders(orders.filter((x) => x.triagecomplete !== null && x.designcomplete !== null))
   }
@@ -219,16 +205,20 @@ const App = () => {
 
   if(dataLoaded === true && triageOrders !== null) {
 
+    console.log(dataLoaded)
+    console.log(orders)
+    console.log(triageOrders)
+
     return (
       <>
         <div className="App">
           <Navbar triageOrders={triageOrders} dashboardOrders={dashboardOrders} completedOrders={completedOrders}/>
           <h1>SCHEDULING TOOL</h1>
           <Routes>
-            <Route path='/allorders' element={<AllOrders orders={orders} triageOrders={triageOrders} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateWorkload={updateWorkload} deleteOrder={deleteOrder} />}></Route>
+            <Route path='/allorders' element={<AllOrders orders={orders} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateWorkload={updateWorkload} deleteOrder={deleteOrder} />}></Route>
             <Route path='/' element={<Triage triageOrders={triageOrders} updateWorkload={updateWorkload} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateTriageComplete={updateTriageComplete} deleteOrder={deleteOrder} daysWithOutWeekend={daysWithOutWeekend} />}></Route>
             <Route path='/triage-test' element={<TriageTest triageOrders={triageOrders} updateWorkload={updateWorkload} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateTriageComplete={updateTriageComplete} deleteOrder={deleteOrder} />}></Route>
-            <Route path='/dashboard' element={<Dashboard dashboardOrders={dashboardOrders} updateOwner={updateOwner} updateBuildTime={updateBuildTime} deleteOrder={deleteOrder} updateDesignComplete={updateDesignComplete} backToTriage={backToTriage} />}></Route>
+            <Route path='/dashboard' element={<Dashboard dashboardOrders={dashboardOrders} updateOwner={updateOwner} updateBuildTime={updateBuildTime} deleteOrder={deleteOrder} updateDesignComplete={updateDesignComplete} backToTriage={backToTriage} getToday={getToday}/>}></Route>
             <Route path='/completed' element={<Completed completedOrders={completedOrders} deleteOrder={deleteOrder} backToDesign={backToDesign} />}></Route>
             <Route path='/create-new-order' element={<AddOrder addOrder={addOrder}/>}></Route>
           </Routes>

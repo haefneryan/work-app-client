@@ -1,5 +1,4 @@
 import React from 'react'
-import TableHeaders from '../components/layout/Table/TableHeaders'
 import EngineerSelect from '../components/selects/EngineerSelect';
 
 //import classes from './AllOrders.css'
@@ -7,8 +6,6 @@ import EngineerSelect from '../components/selects/EngineerSelect';
 function Triage(props) {
     document.title = 'Scheduling Tool - Triage';
     const { triageOrders, deleteOrder, updateWorkload, updateTriageOwner, updateOwner, updateTriageComplete, daysWithOutWeekend } = props;
-
-    console.log(daysWithOutWeekend[0])
 
     return (
         <div>
@@ -22,6 +19,9 @@ function Triage(props) {
                         <td>Owner</td>
                         <td>Workload</td>
                         <td>Buildtime</td>
+                        <td>Triage Complete Date</td>
+                        <td>Design Complete Date</td>
+                        <td>Due Date</td>
                         <td>Triage Complete</td>
                         <td>Delete</td>
                         <td>Sales Order</td>
@@ -46,6 +46,9 @@ function Triage(props) {
                                 </td>
                                 <td><input type='text' min='1' max='1000' defaultValue={order.workload} onChange={(e) => updateWorkload(order, e)} className='workload'></input></td>
                                 <td>-</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td><button onClick={() => updateTriageComplete(order)}>COMPLETE</button></td>
                                 <td><button onClick={() => deleteOrder(order)}>X</button></td>
                                 <td>-</td>
