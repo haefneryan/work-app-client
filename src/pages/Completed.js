@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
-
 import ColumnFilters from '../components/layout/Table/ColumnFilters';
-import { completedTableHeadersInitialState } from '../components/layout/Table/CompletedTableHeaders';
 
-import './AllOrders.css'
+import { completedTableHeadersInitialState } from '../components/layout/Table/CompletedTableHeaders';
+import { backToDesign, deleteOrder } from '../functions/orderStatusFunctions';
+
+import './Completed.css';
+import './AllOrders.css';
 
 function Completed(props) {
     document.title = 'Scheduling Tool - Completed';
-    const { completedOrders, deleteOrder, backToDesign } = props;
+    const { completedOrders } = props;
     const [filteredCompletedOrders, setFilteredCompletedOrders] = useState(completedOrders);
     const [completedTableHeaders, setCompletedTableHeaders] = useState(completedTableHeadersInitialState)
 

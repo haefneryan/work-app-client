@@ -1,8 +1,35 @@
 import React from 'react'
 import StyleNumberSelect from '../components/selects/StyleNumbersSelect'
 
-function AddOrder(props) {
-    const { addOrder } = props
+import { url } from '../functions/url';
+import axios from 'axios';
+
+const addOrder = () => {
+    if (document.getElementById('addOrderCustomer').value.length === 0) {
+      alert('Please enter a Customer name')
+    } else {
+      alert('Order has been created!')
+      axios
+        .post(url, {
+          customer: document.getElementById('addOrderCustomer').value,
+          stylenumber: document.getElementById('addOrderStyleNumber').value,
+          triageowner: 'None',
+          owner: 'None',
+          workload: 2,
+          buildtime: null,
+          triagecomplete: null,
+          designcomplete: null,
+          duedate: null,
+          salesorder: '-',
+          solineitem: '-'
+        })
+        .catch(error => console.log(error))
+        document.getElementById('addOrderCustomer').value = '';
+        document.getElementById('addOrderStyleNumber').value = 'Style Number 1';
+    }
+}
+
+function AddOrder() {
 
     return (
         <div>

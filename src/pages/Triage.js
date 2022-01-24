@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import EngineerSelect from '../components/selects/EngineerSelect';
-
 import ColumnFilters from '../components/layout/Table/ColumnFilters';
-import { triageTableHeadersInitialState } from '../components/layout/Table/TriageTableHeaders';
 
-import './Triage.css'
+import { triageTableHeadersInitialState } from '../components/layout/Table/TriageTableHeaders';
+import { updateTriageComplete, deleteOrder } from '../functions/orderStatusFunctions';
+
+import './Triage.css';
+import './AllOrders.css';
 
 function Triage(props) {
     document.title = 'Scheduling Tool - Triage';
-    const { triageOrders, deleteOrder, updateWorkload, updateTriageOwner, updateOwner, updateTriageComplete } = props;
+    const { triageOrders, updateWorkload, updateTriageOwner, updateOwner } = props;
     const [filteredTriageOrders, setFilteredTriageOrders] = useState(triageOrders);
     const [triageTableHeaders, setTriageTableHeaders] = useState(triageTableHeadersInitialState)
 
@@ -23,7 +25,7 @@ function Triage(props) {
             if (y.filterable === true && y.filters.length > 0) {
                 filteredInfo = filteredInfo.filter(x => {
                     console.log(x)
-                    console.log(y.filters)
+                    console.log(y.name)
                     if (x[y.name].toLowerCase().includes(`${y.filters}`)) {
                         return x
                     }

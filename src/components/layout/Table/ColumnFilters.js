@@ -4,7 +4,7 @@ import EngineerSelect from '../../selects/EngineerSelect';
 import './ColumnFilters.css'
 
 function ColumnFilters(props) {
-  const { triageTableHeaders, dashboardTableHeaders, completedTableHeaders, filterData, triageOrders } = props;
+  const { triageTableHeaders, dashboardTableHeaders, completedTableHeaders, allOrdersTableHeaders, filterData, triageOrders } = props;
   let tableHeaders;
   let index = 0;
 
@@ -14,7 +14,8 @@ function ColumnFilters(props) {
     tableHeaders = dashboardTableHeaders
   } else if (document.URL.endsWith('/completed')) {
     tableHeaders = completedTableHeaders
-
+  } else if (document.URL.endsWith('/allorders')) {
+    tableHeaders = allOrdersTableHeaders
   }
 
   return (

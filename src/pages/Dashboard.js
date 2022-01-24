@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import EngineerSelect from '../components/selects/EngineerSelect';
-
 import ColumnFilters from '../components/layout/Table/ColumnFilters';
+
 import { dashboardTableHeadersInitialState } from '../components/layout/Table/DashboardTableHeaders';
 import { getToday } from '../functions/getToday';
+import { updateDesignComplete, backToTriage, deleteOrder } from '../functions/orderStatusFunctions';
 
 import './AllOrders.css';
 import './Dashboard.css';
 
 function Dashboard(props) {
     document.title = 'Scheduling Tool - Dashboard';
-    const { dashboardOrders, deleteOrder, updateOwner, updateDesignComplete, updateBuildTime, backToTriage } = props;
+    const { dashboardOrders, updateOwner, updateBuildTime } = props;
     const [filteredDashboardOrders, setFilteredDashboardOrders] = useState(dashboardOrders);
     const [dashboardTableHeaders, setDashboardTableHeaders] = useState(dashboardTableHeadersInitialState)
 
@@ -25,10 +26,14 @@ function Dashboard(props) {
     }
 
     useEffect(() => {
+        console.log(dashboardTableHeaders)
         let filteredInfo = dashboardOrders;
         dashboardTableHeaders.forEach(y => {
             if (y.filterable === true && y.filters.length > 0 && y.name !== 'salesorder' && y.name !== 'solineitem') {
+                console.log(y)
                 filteredInfo = filteredInfo.filter(x => {
+                    console.log(x)
+                    console.log(x[y.name])
                     if (x[y.name].toLowerCase().includes(`${y.filters}`)) {
                         return x
                     }
@@ -39,7 +44,6 @@ function Dashboard(props) {
     }, [dashboardTableHeaders]);
 
     const sortColumns = (header) => {
-        console.log(header)
         if (header.sortable === true) {
             dashboardTableHeaders.forEach(value => {
             if (value !== header) {
