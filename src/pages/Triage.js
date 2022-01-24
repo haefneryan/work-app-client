@@ -1,35 +1,104 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import EngineerSelect from '../components/selects/EngineerSelect';
 
-//import classes from './AllOrders.css'
+import ColumnFilters from '../components/layout/Table/ColumnFilters';
+import { triageTableHeadersInitialState } from '../components/layout/Table/TriageTableHeaders';
+
+import './Triage.css'
 
 function Triage(props) {
     document.title = 'Scheduling Tool - Triage';
-    const { triageOrders, deleteOrder, updateWorkload, updateTriageOwner, updateOwner, updateTriageComplete, daysWithOutWeekend } = props;
+    const { triageOrders, deleteOrder, updateWorkload, updateTriageOwner, updateOwner, updateTriageComplete } = props;
+    const [filteredTriageOrders, setFilteredTriageOrders] = useState(triageOrders);
+    const [triageTableHeaders, setTriageTableHeaders] = useState(triageTableHeadersInitialState)
 
+    const filterData = (column) => {
+        setTriageTableHeaders([...triageTableHeaders], triageTableHeaders[column.target.id].filters = column.target.value.toLowerCase())
+    }
+
+    useEffect(() => {
+        console.log(triageTableHeaders)
+        let filteredInfo = triageOrders;
+        triageTableHeaders.forEach(y => {
+            if (y.filterable === true && y.filters.length > 0) {
+                filteredInfo = filteredInfo.filter(x => {
+                    console.log(x)
+                    console.log(y.filters)
+                    if (x[y.name].toLowerCase().includes(`${y.filters}`)) {
+                        return x
+                    }
+                })
+            }
+        })
+        setFilteredTriageOrders(filteredInfo)
+    }, [triageTableHeaders]);
+
+    const sortColumns = (header) => {
+        console.log(header)
+        if (header.sortable === true) {
+          triageTableHeaders.forEach(value => {
+            if (value !== header) {
+              value.sortAsc = false
+              value.sortDesc = false
+            }
+          })
+    
+          // Sort Ascending
+          if (header.sortAsc === false && header.sortDesc === false) {
+            header.sortAsc = true;
+            setFilteredTriageOrders([...filteredTriageOrders.sort((a, b) => {
+              let x = a[header.name];
+              let y = b[header.name];
+        
+              if (x < y) { return -1 } else if (x > y) { return 1 } else { return 0 }
+            })])
+            // Sort Descending
+          } else if (header.sortAsc === true && header.sortDesc === false) {
+            header.sortAsc = false;
+            header.sortDesc = true;
+            setFilteredTriageOrders([...filteredTriageOrders.sort((a, b) => {
+              let x = a[header.name];
+              let y = b[header.name];
+        
+              if (x > y) { return -1 } else if (x < y) { return 1 } else { return 0 }
+            })])
+          } else {
+            header.sortAsc = false;
+            header.sortDesc = false;
+            setFilteredTriageOrders([...filteredTriageOrders.sort((a, b) => {
+              let x = a._id;
+              let y = b._id;
+        
+              if (x > y) { return 1 } else if (x < y) { return -1;} else { return 0 }
+            })])
+          }
+        }
+    }
+    
     return (
         <div>
-            <h3>TRIAGE ({triageOrders.length})</h3>
+            <h3>TRIAGE ({filteredTriageOrders.length})</h3>
             <table>
                 <thead>
                     <tr>
-                        <td>Customer</td>
-                        <td>Style Number</td>
-                        <td>Triage Owner</td>
-                        <td>Owner</td>
-                        <td>Workload</td>
-                        <td>Buildtime</td>
-                        <td>Triage Complete Date</td>
-                        <td>Design Complete Date</td>
-                        <td>Due Date</td>
-                        <td>Triage Complete</td>
-                        <td>Delete</td>
-                        <td>Sales Order</td>
-                        <td>SO Line Item</td>
+                        {triageTableHeaders.map(header => {
+                            return (
+                                <td key={header.name} onClick={() => sortColumns(header)} className='tdheader noselect'>
+                                    <div className='headerName'>
+                                        {header.displayName}
+                                    </div>
+                                    <div className='arrow'>
+                                        {header.sortAsc ? ' ▲' : ''}
+                                        {header.sortDesc ? ' ▼' : ''}
+                                    </div>
+                                </td>
+                            )
+                        })}
                     </tr>
+                    <ColumnFilters triageTableHeaders={triageTableHeaders} filterData={filterData} triageOrders={triageOrders} />
                 </thead>
                 <tbody>
-                    {triageOrders.map(order => {
+                    {filteredTriageOrders.map(order => {
                         return (
                             <tr key={order._id}>
                                 <td>{order.customer}</td>
@@ -45,14 +114,14 @@ function Triage(props) {
                                     </select>
                                 </td>
                                 <td><input type='text' min='1' max='1000' defaultValue={order.workload} onChange={(e) => updateWorkload(order, e)} className='workload'></input></td>
-                                <td>-</td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td><button onClick={() => updateTriageComplete(order)}>COMPLETE</button></td>
                                 <td><button onClick={() => deleteOrder(order)}>X</button></td>
-                                <td>-</td>
-                                <td>-</td>
+                                <td>{order.salesorder}</td>
+                                <td>{order.solineitem}</td>
                             </tr>
                         )
                     })}

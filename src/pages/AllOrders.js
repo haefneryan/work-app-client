@@ -1,5 +1,4 @@
 import React from 'react'
-import TableHeaders from '../components/layout/Table/TableHeaders'
 import EngineerSelect from '../components/selects/EngineerSelect';
 
 //import classes from './AllOrders.css'
@@ -13,7 +12,6 @@ function AllOrders(props) {
             <table>
                 <thead>
                     <tr>
-                        <TableHeaders />
                     </tr>
                 </thead>
                 <tbody>

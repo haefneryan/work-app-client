@@ -5,9 +5,10 @@ import Navbar from './components/layout/Navbar';
 import AllOrders from './pages/AllOrders';
 import AddOrder from './pages/AddOrder';
 import Triage from './pages/Triage';
-import TriageTest from './pages/TriageTest';
 import Dashboard from './pages/Dashboard';
 import Completed from './pages/Completed';
+
+import { getToday } from './functions/getToday';
 
 import axios from 'axios';
 require('dotenv').config();
@@ -26,7 +27,7 @@ const App = () => {
   const [completedOrders, setCompletedOrders] = useState({});
   const [dataLoaded, setDataLoaded] = useState(false);
   const renderCount = useRef(0);
- 
+
   useEffect(() => {   
     getOrders();
   }, [url]);
@@ -35,7 +36,7 @@ const App = () => {
     renderCount.current++
     if(renderCount.current > 0 && orders.length > 0) {
       setOrders(orders)
-      setFilters(orders);
+      filterOrderStatus(orders);
     }
   }, [orders])
 
@@ -70,7 +71,9 @@ const App = () => {
           buildtime: null,
           triagecomplete: null,
           designcomplete: null,
-          duedate: null
+          duedate: null,
+          salesorder: '-',
+          solineitem: '-'
         })
         .then(getOrders())
         .catch(error => console.log(error))
@@ -96,8 +99,6 @@ const App = () => {
   const updateBuildTime = (order, e) => {
     setOrders({...orders}, order.buildtime = e.target.value)
     axios.put(`${url}/${order._id}`, { buildtime: e.target.value })
-    console.log(order.buildtime)
-
   }
 
   const updateTriageOwner = async (order, e) => {
@@ -110,15 +111,6 @@ const App = () => {
     axios.put(`${url}/${order._id}`, { owner: e.target.value })
   }
 
-  const getToday = () => {
-    let today = new Date()
-    let dd = String(today.getDate()).padStart(2, '0')
-    let mm = String(today.getMonth() + 1).padStart(2, '0')
-    let yyyy = today.getFullYear()
-    today = yyyy + '-' + mm + '-' + dd
-    return today
-  }
-
   const endDate = new Date("2030-12-30");
   const daysWithOutWeekend = [];
   for (let currentDate = new Date(getToday()); currentDate <= endDate; currentDate.setDate(currentDate.getDate() + 1)) {
@@ -129,7 +121,7 @@ const App = () => {
 
   const updateTriageComplete = async (order) => {
     let today = getToday()
-      if (order.triageowner === 'None') {
+      if (order.triageowner === 'None' || order.triageowner === null) {
         alert('Please select a triage owner')
       } else if (order.workload === null || order.workload.length === 0) {
         alert('Please enter a workload')
@@ -177,7 +169,6 @@ const App = () => {
         .then(getOrders())
         .catch(error => console.log(error))
     }
-
   }
 
   const backToDesign = (order) => {
@@ -192,7 +183,7 @@ const App = () => {
     }
   }
 
-  const setFilters = (orders) => {
+  const filterOrderStatus = (orders) => {
     setTriageOrders(orders.filter((x) => x.triagecomplete === null && x.designcomplete === null))
     setDashboardOrders(orders.filter((x) => x.triagecomplete !== null && x.designcomplete === null))
     setCompletedOrders(orders.filter((x) => x.triagecomplete !== null && x.designcomplete !== null))
@@ -205,8 +196,6 @@ const App = () => {
 
   if(dataLoaded === true && triageOrders !== null) {
 
-    console.log(dataLoaded)
-    console.log(orders)
     console.log(triageOrders)
 
     return (
@@ -217,8 +206,7 @@ const App = () => {
           <Routes>
             <Route path='/allorders' element={<AllOrders orders={orders} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateWorkload={updateWorkload} deleteOrder={deleteOrder} />}></Route>
             <Route path='/' element={<Triage triageOrders={triageOrders} updateWorkload={updateWorkload} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateTriageComplete={updateTriageComplete} deleteOrder={deleteOrder} daysWithOutWeekend={daysWithOutWeekend} />}></Route>
-            <Route path='/triage-test' element={<TriageTest triageOrders={triageOrders} updateWorkload={updateWorkload} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateTriageComplete={updateTriageComplete} deleteOrder={deleteOrder} />}></Route>
-            <Route path='/dashboard' element={<Dashboard dashboardOrders={dashboardOrders} updateOwner={updateOwner} updateBuildTime={updateBuildTime} deleteOrder={deleteOrder} updateDesignComplete={updateDesignComplete} backToTriage={backToTriage} getToday={getToday}/>}></Route>
+            <Route path='/dashboard' element={<Dashboard dashboardOrders={dashboardOrders} updateOwner={updateOwner} updateBuildTime={updateBuildTime} deleteOrder={deleteOrder} updateDesignComplete={updateDesignComplete} backToTriage={backToTriage} />}></Route>
             <Route path='/completed' element={<Completed completedOrders={completedOrders} deleteOrder={deleteOrder} backToDesign={backToDesign} />}></Route>
             <Route path='/create-new-order' element={<AddOrder addOrder={addOrder}/>}></Route>
           </Routes>
