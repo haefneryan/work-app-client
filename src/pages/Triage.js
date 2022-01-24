@@ -19,19 +19,17 @@ function Triage(props) {
     }
 
     useEffect(() => {
-        console.log(triageTableHeaders)
         let filteredInfo = triageOrders;
         triageTableHeaders.forEach(y => {
             if (y.filterable === true && y.filters.length > 0) {
                 filteredInfo = filteredInfo.filter(x => {
-                    console.log(x)
-                    console.log(y.name)
                     if (x[y.name].toLowerCase().includes(`${y.filters}`)) {
                         return x
                     }
                 })
             }
         })
+        console.log(filteredInfo)
         setFilteredTriageOrders(filteredInfo)
     }, [triageTableHeaders]);
 

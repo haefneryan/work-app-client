@@ -13,7 +13,7 @@ const addOrder = () => {
         .post(url, {
           customer: document.getElementById('addOrderCustomer').value,
           stylenumber: document.getElementById('addOrderStyleNumber').value,
-          triageowner: 'None',
+          triageowner: 'None', 
           owner: 'None',
           workload: 2,
           buildtime: null,
@@ -21,7 +21,8 @@ const addOrder = () => {
           designcomplete: null,
           duedate: null,
           salesorder: '-',
-          solineitem: '-'
+          solineitem: '10',
+          sameas: null
         })
         .catch(error => console.log(error))
         document.getElementById('addOrderCustomer').value = '';
@@ -30,7 +31,6 @@ const addOrder = () => {
 }
 
 function AddOrder() {
-
     return (
         <div>
             Customer: <input type='text' placeholder='Enter the Customer name' id='addOrderCustomer'></input><br></br><br></br>

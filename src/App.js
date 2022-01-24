@@ -8,21 +8,16 @@ import Triage from './pages/Triage';
 import Dashboard from './pages/Dashboard';
 import Completed from './pages/Completed';
 
+import { url } from './functions/url';
+import { addSalesOrderInfo } from './functions/addSalesOrderInfo';
 import axios from 'axios';
 require('dotenv').config();
 
 const App = () => {
-  let url;
-  const port = process.env.REACT_APP_PORT || 4000;
-  if (process.env.REACT_APP_NODE_ENV === 'development') {
-    url = `http://localhost:${port}`;
-  } else {
-    url = 'https://stormy-plateau-67088.herokuapp.com';
-  }
-  const [orders, setOrders] = useState({});
-  const [triageOrders, setTriageOrders] = useState({});
-  const [dashboardOrders, setDashboardOrders] = useState({});
-  const [completedOrders, setCompletedOrders] = useState({});
+  const [orders, setOrders] = useState([]);
+  const [triageOrders, setTriageOrders] = useState([]);
+  const [dashboardOrders, setDashboardOrders] = useState([]);
+  const [completedOrders, setCompletedOrders] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
   const renderCount = useRef(0);
 
@@ -34,7 +29,8 @@ const App = () => {
     renderCount.current++
     if(renderCount.current > 0 && orders.length > 0) {
       setOrders(orders)
-      filterOrderStatus(orders);
+      filterOrderStatus(orders)
+      addSalesOrderInfo(orders)
     }
   }, [orders])
 

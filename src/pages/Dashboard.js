@@ -26,10 +26,9 @@ function Dashboard(props) {
     }
 
     useEffect(() => {
-        console.log(dashboardTableHeaders)
         let filteredInfo = dashboardOrders;
         dashboardTableHeaders.forEach(y => {
-            if (y.filterable === true && y.filters.length > 0 && y.name !== 'salesorder' && y.name !== 'solineitem') {
+            if (y.filterable === true && y.filters.length > 0) {
                 console.log(y)
                 filteredInfo = filteredInfo.filter(x => {
                     console.log(x)
@@ -40,6 +39,7 @@ function Dashboard(props) {
                 })
             }
         })
+        console.log(filteredInfo)
         setFilteredDashboardOrders(filteredInfo)
     }, [dashboardTableHeaders]);
 

@@ -103,10 +103,10 @@ export const allOrdersTableHeadersInitialState = [
         index: 9,
         displayName: 'Sales Order',
         name: 'salesorder',
-        sortable: false,
+        sortable: true,
         sortAsc: false,
         sortDesc: false,
-        filterable: false,
+        filterable: true,
         filterableType: 'search',
         filters: ''
     },
@@ -114,10 +114,10 @@ export const allOrdersTableHeadersInitialState = [
         index: 10,
         displayName: 'SO Line Item',
         name: 'solineitem',
-        sortable: false,
+        sortable: true,
         sortAsc: false,
         sortDesc: false,
-        filterable: false,
+        filterable: true,
         filterableType: 'search',
         filters: ''
     }

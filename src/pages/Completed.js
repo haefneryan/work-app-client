@@ -20,7 +20,7 @@ function Completed(props) {
     useEffect(() => {
         let filteredInfo = completedOrders;
         completedTableHeaders.forEach(y => {
-            if (y.filterable === true && y.filters.length > 0 && y.name !== 'salesorder' && y.name !== 'solineitem') {
+            if (y.filterable === true && y.filters.length > 0) {
                 filteredInfo = filteredInfo.filter(x => {
                     if (x[y.name].toLowerCase().includes(`${y.filters}`)) {
                         return x
