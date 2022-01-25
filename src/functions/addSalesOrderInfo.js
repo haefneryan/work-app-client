@@ -11,6 +11,6 @@ export const addSalesOrderInfo = (orders) => {
                 }
             }
         }
-        axios.put(`${url}/${x._id}`, { salesorder: salesOrderString, solineitem: '10' })
+        axios.put(`${url}/${x._id}`, { salesorder: salesOrderString, solineitem: '10'})
     })
 }

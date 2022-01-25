@@ -68,60 +68,6 @@ export const completedTableHeadersInitialState = [
     },
     {
         index: 6,
-        displayName: 'Triage Complete Date',
-        name: 'triagecomplete',
-        sortable: true,
-        sortAsc: false,
-        sortDesc: false,
-        filterable: true,
-        filterableType: 'search',
-        filters: ''
-    },
-    {
-        index: 7,
-        displayName: 'Design Complete Date',
-        name: 'designcomplete',
-        sortable: true,
-        sortAsc: false,
-        sortDesc: false,
-        filterable: true,
-        filterableType: 'search',
-        filters: ''
-    },
-    {
-        index: 8,
-        displayName: 'Due Date',
-        name: 'duedate',
-        sortable: true,
-        sortAsc: false,
-        sortDesc: false,
-        filterable: true,
-        filterableType: 'search',
-        filters: ''
-    },
-    {
-        index: 9,
-        displayName: 'Back to Design',
-        name: 'backtodesign',
-        sortable: false,
-        sortAsc: false,
-        sortDesc: false,
-        filterable: false,
-        filters: ''
-    },
-    {
-        index: 10,
-        displayName: 'Delete',
-        name: 'delete',
-        sortable: false,
-        sortAsc: false,
-        sortDesc: false,
-        filterable: false,
-        filterableType: 'search',
-        filters: ''
-    },
-    {
-        index: 11,
         displayName: 'Sales Order',
         name: 'salesorder',
         sortable: true,
@@ -132,13 +78,67 @@ export const completedTableHeadersInitialState = [
         filters: ''
     },
     {
-        index: 12,
+        index: 7,
         displayName: 'SO Line Item',
         name: 'solineitem',
         sortable: true,
         sortAsc: false,
         sortDesc: false,
         filterable: true,
+        filterableType: 'search',
+        filters: ''
+    },
+    {
+        index: 8,
+        displayName: 'Triage Complete Date',
+        name: 'triagecomplete',
+        sortable: true,
+        sortAsc: false,
+        sortDesc: false,
+        filterable: true,
+        filterableType: 'search',
+        filters: ''
+    },
+    {
+        index: 9,
+        displayName: 'Design Complete Date',
+        name: 'designcomplete',
+        sortable: true,
+        sortAsc: false,
+        sortDesc: false,
+        filterable: true,
+        filterableType: 'search',
+        filters: ''
+    },
+    {
+        index: 10,
+        displayName: 'Due Date',
+        name: 'duedate',
+        sortable: true,
+        sortAsc: false,
+        sortDesc: false,
+        filterable: true,
+        filterableType: 'search',
+        filters: ''
+    },
+    {
+        index: 11,
+        displayName: 'Back to Design',
+        name: 'backtodesign',
+        sortable: false,
+        sortAsc: false,
+        sortDesc: false,
+        filterable: false,
+        filters: ''
+    },
+    {
+        index: 12,
+        displayName: 'Delete',
+        name: 'delete',
+        sortable: false,
+        sortAsc: false,
+        sortDesc: false,
+        filterable: false,
         filterableType: 'search',
         filters: ''
     }

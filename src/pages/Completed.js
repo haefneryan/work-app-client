@@ -107,13 +107,13 @@ function Completed(props) {
                                 <td>{order.owner}</td>
                                 <td>{order.workload}</td>
                                 <td>{order.buildtime}</td>
+                                <td>{order.salesorder}</td>
+                                <td>{order.solineitem}</td>
                                 <td>{order.triagecomplete}</td>
                                 <td>{order.designcomplete}</td>
                                 <td>{order.duedate}</td>
                                 <td><button onClick={() => backToDesign(order)}>SEND BACK</button></td>
                                 <td><button onClick={() => deleteOrder(order)}>X</button></td>
-                                <td>{order.salesorder}</td>
-                                <td>{order.solineitem}</td>
                             </tr>
                         )
                     })}

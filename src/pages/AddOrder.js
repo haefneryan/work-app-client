@@ -22,7 +22,10 @@ const addOrder = () => {
           duedate: null,
           salesorder: '-',
           solineitem: '10',
-          sameas: null
+          sameas: null,
+          sameas: null,
+          sameasChildren: [],
+          child: false
         })
         .catch(error => console.log(error))
         document.getElementById('addOrderCustomer').value = '';

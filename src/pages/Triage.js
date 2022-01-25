@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import EngineerSelect from '../components/selects/EngineerSelect';
 import ColumnFilters from '../components/layout/Table/ColumnFilters';
+import TriageOrderRow from '../components/TriageOrderRow';
 
 import { triageTableHeadersInitialState } from '../components/layout/Table/TriageTableHeaders';
 import { updateTriageComplete, deleteOrder } from '../functions/orderStatusFunctions';
 
 import './Triage.css';
-import './AllOrders.css';
+// import './AllOrders.css';
 
 function Triage(props) {
     document.title = 'Scheduling Tool - Triage';
-    const { triageOrders, updateWorkload, updateTriageOwner, updateOwner } = props;
+    const { triageOrders, updateWorkload, updateTriageOwner, updateOwner, updateSameAs, removeChildren } = props;
     const [filteredTriageOrders, setFilteredTriageOrders] = useState(triageOrders);
     const [triageTableHeaders, setTriageTableHeaders] = useState(triageTableHeadersInitialState)
-
+    
     const filterData = (column) => {
         setTriageTableHeaders([...triageTableHeaders], triageTableHeaders[column.target.id].filters = column.target.value.toLowerCase())
     }
@@ -29,7 +29,6 @@ function Triage(props) {
                 })
             }
         })
-        console.log(filteredInfo)
         setFilteredTriageOrders(filteredInfo)
     }, [triageTableHeaders]);
 
@@ -100,29 +99,19 @@ function Triage(props) {
                 <tbody>
                     {filteredTriageOrders.map(order => {
                         return (
-                            <tr key={order._id}>
-                                <td>{order.customer}</td>
-                                <td>{order.stylenumber}</td>
-                                <td>
-                                    <select defaultValue={order.triageowner} onChange={(e) => updateTriageOwner(order, e)}>
-                                        <EngineerSelect />
-                                    </select>
-                                </td>
-                                <td>
-                                    <select defaultValue={order.owner} onChange={(e) => updateOwner(order, e)}>
-                                        <EngineerSelect />
-                                    </select>
-                                </td>
-                                <td><input type='text' min='1' max='1000' defaultValue={order.workload} onChange={(e) => updateWorkload(order, e)} className='workload'></input></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td><button onClick={() => updateTriageComplete(order)}>COMPLETE</button></td>
-                                <td><button onClick={() => deleteOrder(order)}>X</button></td>
-                                <td>{order.salesorder}</td>
-                                <td>{order.solineitem}</td>
-                            </tr>
+                            <>
+                                <TriageOrderRow order={order} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateWorkload={updateWorkload} updateSameAs={updateSameAs} updateTriageComplete={updateTriageComplete} deleteOrder={deleteOrder} removeChildren={removeChildren}/>   
+                                {/* {order.sameasChildren.map(child => {
+                                    {console.log(child)}
+                                    <TriageOrderRow order={child} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateWorkload={updateWorkload} updateSameAs={updateSameAs} updateTriageComplete={updateTriageComplete} deleteOrder={deleteOrder} removeChildren={removeChildren}/>   
+                                })} */}
+                                {/* <tr key={`${order._id}A`} className='childrenRow'>
+                                    <td>
+                                        Children
+                                        <button onClick={() => removeChildren(order)}>Remove Children</button>
+                                    </td>
+                                </tr> */}
+                            </>
                         )
                     })}
                 </tbody>

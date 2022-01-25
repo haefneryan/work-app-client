@@ -120,14 +120,14 @@ function Dashboard(props) {
                                 </td>
                                 <td className='workload'>{order.workload}</td>
                                 <td><input type='text' min='1' max='1000' defaultValue={order.buildtime} onChange={(e) => updateBuildTime(order, e)} className='workload'></input></td>
+                                <td>{order.salesorder}</td>
+                                <td>{order.solineitem}</td>
                                 <td>{order.triagecomplete}</td>
                                 <td></td>
                                 <td className={`${checkDueDate(order)}`}>{order.duedate}</td>
                                 <td><button onClick={() => updateDesignComplete(order)}>COMPLETE</button></td>
                                 <td><button onClick={() => backToTriage(order)}>SEND BACK</button></td>
                                 <td><button onClick={() => deleteOrder(order)}>X</button></td>
-                                <td>{order.salesorder}</td>
-                                <td>{order.solineitem}</td>
                             </tr>
                         )
                     })}

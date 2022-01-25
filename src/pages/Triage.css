@@ -1,0 +1,19 @@
+
+.childrenRow {
+    background-color: yellow !important;
+}
+
+.sameAsParentCell {
+    /* display: flex; */
+    border: 1px solid black;
+    position: relative;
+}
+.sameAsParentCellWithChildren {
+    background-color: darkorange;
+}
+
+.sameAsChildInput {
+    text-align: center;
+    width: 80%;
+}
+
