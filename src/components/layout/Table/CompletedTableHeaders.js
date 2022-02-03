@@ -2,6 +2,18 @@
 export const completedTableHeadersInitialState = [
     {
         index: 0,
+        displayName: '',
+        name: '',
+        sortable: false,
+        sortAsc: false,
+        sortDesc: false,
+        filterable: false,
+        filterableType: 'search',
+        filters: '',
+        classes: 'childrenExpand'
+    },
+    {
+        index: 1,
         displayName: 'Customer',
         name: 'customer',
         sortable: true,
@@ -9,10 +21,11 @@ export const completedTableHeadersInitialState = [
         sortDesc: false,
         filterable: true,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
-        index: 1,
+        index: 2,
         displayName: 'Style Number',
         name: 'stylenumber',
         sortable: true,
@@ -20,10 +33,11 @@ export const completedTableHeadersInitialState = [
         sortDesc: false,
         filterable: true,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
-        index: 2,
+        index: 3,
         displayName: 'Triage Owner',
         name: 'triageowner',
         sortable: true,
@@ -31,10 +45,11 @@ export const completedTableHeadersInitialState = [
         sortDesc: false,
         filterable: true,
         filterableType: 'select',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
-        index: 3,
+        index: 4,
         displayName: 'Owner',
         name: 'owner',
         sortable: true,
@@ -42,10 +57,11 @@ export const completedTableHeadersInitialState = [
         sortDesc: false,
         filterable: true,
         filterableType: 'select',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
-        index: 4,
+        index: 5,
         displayName: 'Workload',
         name: 'workload',
         sortable: false,
@@ -53,10 +69,11 @@ export const completedTableHeadersInitialState = [
         sortDesc: false,
         filterable: false,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
-        index: 5,
+        index: 6,
         displayName: 'Buildtime',
         name: 'buildtime',
         sortable: false,
@@ -64,10 +81,11 @@ export const completedTableHeadersInitialState = [
         sortDesc: false,
         filterable: false,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
-        index: 6,
+        index: 7,
         displayName: 'Sales Order',
         name: 'salesorder',
         sortable: true,
@@ -75,10 +93,11 @@ export const completedTableHeadersInitialState = [
         sortDesc: false,
         filterable: true,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
-        index: 7,
+        index: 8,
         displayName: 'SO Line Item',
         name: 'solineitem',
         sortable: true,
@@ -86,10 +105,23 @@ export const completedTableHeadersInitialState = [
         sortDesc: false,
         filterable: true,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
-        index: 8,
+        index: 9,
+        displayName: 'Same As',
+        name: 'sameas',
+        sortable: true,
+        sortAsc: false,
+        sortDesc: false,
+        filterable: true,
+        filterableType: 'search',
+        filters: '',
+        classes: 'datacell'
+    },
+    {
+        index: 10,
         displayName: 'Triage Complete Date',
         name: 'triagecomplete',
         sortable: true,
@@ -97,10 +129,11 @@ export const completedTableHeadersInitialState = [
         sortDesc: false,
         filterable: true,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
-        index: 9,
+        index: 11,
         displayName: 'Design Complete Date',
         name: 'designcomplete',
         sortable: true,
@@ -108,10 +141,11 @@ export const completedTableHeadersInitialState = [
         sortDesc: false,
         filterable: true,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
-        index: 10,
+        index: 12,
         displayName: 'Due Date',
         name: 'duedate',
         sortable: true,
@@ -119,20 +153,22 @@ export const completedTableHeadersInitialState = [
         sortDesc: false,
         filterable: true,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
-        index: 11,
+        index: 13,
         displayName: 'Back to Design',
         name: 'backtodesign',
         sortable: false,
         sortAsc: false,
         sortDesc: false,
         filterable: false,
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
-        index: 12,
+        index: 14,
         displayName: 'Delete',
         name: 'delete',
         sortable: false,
@@ -140,6 +176,7 @@ export const completedTableHeadersInitialState = [
         sortDesc: false,
         filterable: false,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     }
 ]

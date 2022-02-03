@@ -9,7 +9,8 @@ export const triageTableHeadersInitialState = [
         sortDesc: false,
         filterable: false,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'childrenExpand'
     },
     {
         index: 1,
@@ -20,7 +21,8 @@ export const triageTableHeadersInitialState = [
         sortDesc: false,
         filterable: true,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
         index: 2,
@@ -31,7 +33,8 @@ export const triageTableHeadersInitialState = [
         sortDesc: false,
         filterable: true,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
         index: 3,
@@ -42,7 +45,8 @@ export const triageTableHeadersInitialState = [
         sortDesc: false,
         filterable: true,
         filterableType: 'select',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
         index: 4,
@@ -53,7 +57,8 @@ export const triageTableHeadersInitialState = [
         sortDesc: false,
         filterable: true,
         filterableType: 'select',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
         index: 5,
@@ -64,7 +69,8 @@ export const triageTableHeadersInitialState = [
         sortDesc: false,
         filterable: false,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
         index: 6,
@@ -75,7 +81,8 @@ export const triageTableHeadersInitialState = [
         sortDesc: false,
         filterable: false,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
         index: 7,
@@ -86,7 +93,8 @@ export const triageTableHeadersInitialState = [
         sortDesc: false,
         filterable: true,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
         index: 8,
@@ -97,7 +105,8 @@ export const triageTableHeadersInitialState = [
         sortDesc: false,
         filterable: true,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
         index: 9,
@@ -108,7 +117,8 @@ export const triageTableHeadersInitialState = [
         sortDesc: false,
         filterable: false,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
         index: 10,
@@ -119,7 +129,8 @@ export const triageTableHeadersInitialState = [
         sortDesc: false,
         filterable: false,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
         index: 11,
@@ -130,7 +141,8 @@ export const triageTableHeadersInitialState = [
         sortDesc: false,
         filterable: false,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
         index: 12,
@@ -141,7 +153,8 @@ export const triageTableHeadersInitialState = [
         sortDesc: false,
         filterable: false,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
         index: 13,
@@ -152,7 +165,8 @@ export const triageTableHeadersInitialState = [
         sortDesc: false,
         filterable: false,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     },
     {
         index: 14,
@@ -163,6 +177,7 @@ export const triageTableHeadersInitialState = [
         sortDesc: false,
         filterable: false,
         filterableType: 'search',
-        filters: ''
+        filters: '',
+        classes: 'datacell'
     }
 ]

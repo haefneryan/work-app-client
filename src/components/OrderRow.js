@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import EngineerSelect from './selects/EngineerSelect';
 
-function TriageOrderRow(props) {
-    const { triageOrders, order, updateTriageOwner, updateOwner, updateWorkload, updateSameAs, updateTriageComplete, deleteOrder, displayOrderChildren } = props
+function OrderRow(props) {
+    const { triageOrders, order, updateOwner, updateWorkload, updateSameAs, updateTriageComplete, deleteOrder, displayOrderChildren } = props
     const [ inputValue, setInputValue ] = useState('');
     let index = 0;
 
@@ -37,11 +37,7 @@ function TriageOrderRow(props) {
                 </td>
                 <td>{order.customer}</td>
                 <td>{order.stylenumber}</td>
-                <td>
-                    <select defaultValue={order.triageowner} onChange={(e) => updateTriageOwner(order, e)}>
-                        <EngineerSelect />
-                    </select>
-                </td>
+                <td>{order.triageowner}</td>
                 <td>
                     <select defaultValue={order.owner} onChange={(e) => updateOwner(order, e)}>
                         <EngineerSelect />
@@ -49,7 +45,7 @@ function TriageOrderRow(props) {
                 </td>
                 <td>
                     {(order.child === false) ?
-                       <input type='text' min='1' max='1000' defaultValue={order.workload} onChange={(e) => updateWorkload(order, e)} className='workload'></input> :
+                       <input type='text' min='1' max='1000' defaultValue={order.workload} onChange={(e) => updateWorkload(e, order)} className='workload'></input> :
                        <input disabled className='workload' value={order.workload}></input>
                     }
                 </td>
@@ -73,4 +69,4 @@ function TriageOrderRow(props) {
     )
 }
 
-export default TriageOrderRow;
+export default OrderRow;

@@ -6,6 +6,7 @@ import { backToDesign, deleteOrder } from '../functions/orderStatusFunctions';
 
 import './Completed.css';
 import './AllOrders.css';
+import ColumnHeaderCell from '../components/layout/Table/ColumnHeaderCell';
 
 function Completed(props) {
     document.title = 'Scheduling Tool - Completed';
@@ -32,7 +33,6 @@ function Completed(props) {
     }, [completedTableHeaders]);
 
     const sortColumns = (header) => {
-        console.log(header)
         if (header.sortable === true) {
             completedTableHeaders.forEach(value => {
             if (value !== header) {
@@ -73,8 +73,6 @@ function Completed(props) {
         }
       }
 
-    console.log(completedOrders)
-
     return (
         <div>
             <h3>COMPLETED ({filteredCompletedOrders.length})</h3>
@@ -82,17 +80,7 @@ function Completed(props) {
             <thead>
                     <tr>
                         {completedTableHeaders.map(header => {
-                            return (
-                                <td key={header.name} onClick={() => sortColumns(header)} className='tdheader noselect'>
-                                    <div className='headerName'>
-                                        {header.displayName}
-                                    </div>
-                                    <div className='arrow'>
-                                        {header.sortAsc ? ' ▲' : ''}
-                                        {header.sortDesc ? ' ▼' : ''}
-                                    </div>
-                                </td>
-                            )
+                            return <ColumnHeaderCell header={header} sortColumns={sortColumns}/>
                         })}
                     </tr>
                     <ColumnFilters completedTableHeaders={completedTableHeaders} filterData={filterData}/>
@@ -101,6 +89,7 @@ function Completed(props) {
                     {filteredCompletedOrders.map(order => {
                         return (
                             <tr key={order._id}>
+                                <td></td>
                                 <td>{order.customer}</td>
                                 <td>{order.stylenumber}</td>
                                 <td>{order.triageowner}</td>
@@ -109,6 +98,7 @@ function Completed(props) {
                                 <td>{order.buildtime}</td>
                                 <td>{order.salesorder}</td>
                                 <td>{order.solineitem}</td>
+                                <td>{order.sameas}</td>
                                 <td>{order.triagecomplete}</td>
                                 <td>{order.designcomplete}</td>
                                 <td>{order.duedate}</td>

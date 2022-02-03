@@ -34,6 +34,15 @@ const App = () => {
     }
   }, [orders])
 
+  useEffect(() => {
+    if(orders.length > 0) {
+      triageOrders.forEach(addProp => {
+        addProp.displaySameAsChildren = false
+      })
+    }
+  
+  }, []);
+  
   const getOrders = async () => {
     try {
       const res = await axios.get(url, {
@@ -50,14 +59,29 @@ const App = () => {
     }
   }
   
-  const updateTriageOwner = async (order, e) => {
+  const updateTriageOwner = (order, e) => {
+    console.log(e.target.value)
     setOrders([...orders], order.triageowner = e.target.value)
-    await axios.put(`${url}/${order._id}`, { triageowner: e.target.value })
+    axios.put(`${url}/${order._id}`, { triageowner: e.target.value })
+    order.sameasChildren.forEach(child => {
+      setOrders([...orders], child.triageowner = e.target.value)
+      let newArray = order.sameasChildren
+      newArray[newArray.indexOf(child)].triageowner = e.target.value;
+      axios.put(`${url}/${order._id}`, { sameasChildren: newArray });
+      axios.put(`${url}/${child._id}`, { triageowner: e.target.value });
+    })
   }
 
   const updateOwner = (order, e) => {
     setOrders([...orders], order.owner = e.target.value)
     axios.put(`${url}/${order._id}`, { owner: e.target.value })
+    order.sameasChildren.forEach(child => {
+      setOrders([...orders], child.owner = e.target.value)
+      let newArray = order.sameasChildren
+      newArray[newArray.indexOf(child)].owner = e.target.value;
+      axios.put(`${url}/${order._id}`, { sameasChildren: newArray });
+      axios.put(`${url}/${child._id}`, { owner: e.target.value });
+    })
   }
 
   const updateWorkload = (order, e) => {
@@ -71,34 +95,51 @@ const App = () => {
   }
 
   const updateSameAs = (order, e) => {
-    // setOrders([...orders], order.sameas = e.target.value)
-    // axios.put(`${url}/${order._id}`, { sameas: e.target.value })
-    // if (e.target.value.length === 9) {
-    //   orders.forEach(x => {
-    //     //let uniquekey = x.salesorder + '-' + x.solineitem
-    //     if (x.uniquekey.includes(`${e.target.value}`)) {
-    //       console.log(x)
-    //       console.log(order)
-    //       if (window.confirm(`Match Found. Do you want to mark ${order.uniquekey} to be the same as ${x.uniquekey}?`)) {
-    //         setOrders({...orders}, x.sameasChildren.push(order))
-    //         setOrders({...orders}, order.workload = 0.1, order.child = true)
-    //         let newChildrenArray = []
-    //         newChildrenArray.push(order)
-    //         console.log(newChildrenArray)
-    //         axios.put(`${url}/${x._id}`, { sameasChildren: newChildrenArray })
-    //         axios.put(`${url}/${order._id}`, { workload: 0.1, child: true })
-    //       }
-    //     }
-    //   })
-    // }
+    setOrders([...orders], order.sameas = e.target.value)
+    axios.put(`${url}/${order._id}`, { sameas: e.target.value })
+    if (e.target.value.length === 9) {
+      orders.forEach(x => {
+        if (x.uniquekey.includes(`${e.target.value}`)) {
+          if (window.confirm(`Match Found. Do you want to mark ${order.uniquekey} to be the same as ${x.uniquekey}?`)) {
+            let newArray = [...x.sameasChildren, order];
+            order.child = true;
+            console.log(order)
+            setTriageOrders([...triageOrders], 
+              x.sameasChildren.push(order),
+              order.workload = 0.1,
+              order.child = true,
+              order.triageowner = x.triageowner,
+              order.owner = x.owner
+            )
+            axios.put(`${url}/${x._id}`, { sameasChildren: newArray })
+            axios.put(`${url}/${order._id}`, { workload: 0.1, child: true, triageowner: x.triageowner, owner: x.owner })
+          }
+        }
+      })
+    }
   }
 
-  const removeChildren = (order) => {
-    order.sameasChildren.forEach(x => {
-      console.log(x)
-    })
-    setOrders({...orders}, order.sameasChildren = [], order.child = false)
-    axios.put(`${url}/${order._id}`, { sameasChildren: [], child: false })
+  const displayOrderChildren = (order) => {
+    if(order.displaySameAsChildren) {
+      setTriageOrders([...triageOrders], order.displaySameAsChildren = false)
+    } else {
+      setTriageOrders([...triageOrders], order.displaySameAsChildren = true)
+    }
+  }
+
+  const removeChild = (order, child) => {
+    if(window.confirm(`Are you sure you want to remove ${child.uniquekey} as a child of ${order.uniquekey}?`)) {
+      let newArray = []
+      let firstPart = order.sameasChildren.slice(0, order.sameasChildren.indexOf(child))
+      let secondPart = order.sameasChildren.slice(order.sameasChildren.indexOf(child) + 1)
+      newArray = [...firstPart, ...secondPart]
+      child.child = false
+      
+      setTriageOrders([...triageOrders], order.sameasChildren = newArray)
+      setTriageOrders([...triageOrders], child.child = false)
+      axios.put(`${url}/${order._id}`, { sameasChildren: newArray})
+      axios.put(`${url}/${child._id}`, { child: false})
+    }
   }
 
   const filterOrderStatus = (orders) => {
@@ -114,6 +155,8 @@ const App = () => {
 
   if(dataLoaded === true && triageOrders !== null) {
     console.log(triageOrders)
+    console.log(dashboardOrders)
+    
     return (
       <>
         <div className="App">
@@ -121,8 +164,8 @@ const App = () => {
           <h1>SCHEDULING TOOL</h1>
           <Routes>
             <Route path='/allorders' element={<AllOrders orders={orders} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateWorkload={updateWorkload} />}></Route>
-            <Route path='/' element={<Triage triageOrders={triageOrders} updateWorkload={updateWorkload} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateSameAs={updateSameAs} removeChildren={removeChildren} />}></Route>
-            <Route path='/dashboard' element={<Dashboard dashboardOrders={dashboardOrders} updateOwner={updateOwner} updateBuildTime={updateBuildTime} />}></Route>
+            <Route path='/triage' element={<Triage triageOrders={triageOrders} updateWorkload={updateWorkload} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateSameAs={updateSameAs} removeChild={removeChild} displayOrderChildren={displayOrderChildren}/>}></Route>
+            <Route path='/dashboard' element={<Dashboard dashboardOrders={dashboardOrders} updateOwner={updateOwner} updateBuildTime={updateBuildTime} displayOrderChildren={displayOrderChildren} updateWorkload={updateWorkload} />}></Route>
             <Route path='/completed' element={<Completed completedOrders={completedOrders} />}></Route>
             <Route path='/create-new-order' element={<AddOrder />}></Route>
           </Routes>

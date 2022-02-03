@@ -13,6 +13,7 @@ table {
   overflow-x: scroll;
 }
 
-tr:nth-child(even) {
+tr:nth-child(even)  {
   background-color: lightgrey;
 }
+

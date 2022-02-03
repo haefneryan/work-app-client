@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import ColumnFilters from '../components/layout/Table/ColumnFilters';
 import TriageOrderRow from '../components/TriageOrderRow';
+import TriageOrderChild from '../components/TriageOrderChild';
 
 import { triageTableHeadersInitialState } from '../components/layout/Table/TriageTableHeaders';
 import { updateTriageComplete, deleteOrder } from '../functions/orderStatusFunctions';
+import ColumnHeaderCell from '../components/layout/Table/ColumnHeaderCell';
 
 import './Triage.css';
 // import './AllOrders.css';
 
 function Triage(props) {
     document.title = 'Scheduling Tool - Triage';
-    const { triageOrders, updateWorkload, updateTriageOwner, updateOwner, updateSameAs, removeChildren } = props;
+    const { triageOrders, updateWorkload, updateTriageOwner, updateOwner, updateSameAs, removeChild, displayOrderChildren } = props;
     const [filteredTriageOrders, setFilteredTriageOrders] = useState(triageOrders);
     const [triageTableHeaders, setTriageTableHeaders] = useState(triageTableHeadersInitialState)
     
@@ -33,7 +35,6 @@ function Triage(props) {
     }, [triageTableHeaders]);
 
     const sortColumns = (header) => {
-        console.log(header)
         if (header.sortable === true) {
           triageTableHeaders.forEach(value => {
             if (value !== header) {
@@ -81,17 +82,7 @@ function Triage(props) {
                 <thead>
                     <tr>
                         {triageTableHeaders.map(header => {
-                            return (
-                                <td key={header.name} onClick={() => sortColumns(header)} className='tdheader noselect'>
-                                    <div className='headerName'>
-                                        {header.displayName}
-                                    </div>
-                                    <div className='arrow'>
-                                        {header.sortAsc ? ' ▲' : ''}
-                                        {header.sortDesc ? ' ▼' : ''}
-                                    </div>
-                                </td>
-                            )
+                            return <ColumnHeaderCell sortColumns={sortColumns} header={header}/>
                         })}
                     </tr>
                     <ColumnFilters triageTableHeaders={triageTableHeaders} filterData={filterData} triageOrders={triageOrders} />
@@ -100,17 +91,22 @@ function Triage(props) {
                     {filteredTriageOrders.map(order => {
                         return (
                             <>
-                                <TriageOrderRow order={order} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateWorkload={updateWorkload} updateSameAs={updateSameAs} updateTriageComplete={updateTriageComplete} deleteOrder={deleteOrder} removeChildren={removeChildren}/>   
-                                {/* {order.sameasChildren.map(child => {
-                                    {console.log(child)}
-                                    <TriageOrderRow order={child} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateWorkload={updateWorkload} updateSameAs={updateSameAs} updateTriageComplete={updateTriageComplete} deleteOrder={deleteOrder} removeChildren={removeChildren}/>   
-                                })} */}
-                                {/* <tr key={`${order._id}A`} className='childrenRow'>
-                                    <td>
-                                        Children
-                                        <button onClick={() => removeChildren(order)}>Remove Children</button>
-                                    </td>
-                                </tr> */}
+                                {order.child ? <></> :
+                                    <TriageOrderRow key={order._id} order={order} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateWorkload={updateWorkload} updateSameAs={updateSameAs} updateTriageComplete={updateTriageComplete} deleteOrder={deleteOrder} displayOrderChildren={displayOrderChildren} triageOrders={triageOrders} > 
+                               
+                                    {order.displaySameAsChildren ?
+                                        <>
+                                            {(order.sameasChildren).map(child => {
+                                                return (
+                                                    <TriageOrderChild order={order} child={child} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} removeChild={removeChild} />
+                                                )
+                                            })}
+                                        </>
+                                    :
+                                    <></>
+                                    }
+                                    </TriageOrderRow>
+                                }
                             </>
                         )
                     })}

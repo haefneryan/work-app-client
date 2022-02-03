@@ -62,23 +62,31 @@ for (let currentDate = new Date(getToday()); currentDate <= endDate; currentDate
   }
 }
 
-export const updateTriageComplete = async (order) => {
+export const updateTriageComplete = async (order, triageOrders) => {
   let today = getToday()
     if (order.triageowner === 'None' || order.triageowner === null) {
       alert('Please select a triage owner')
     } else if (order.workload === null || order.workload.length === 0) {
       alert('Please enter a workload')
     } else {
+      let duedate = daysWithOutWeekend[12]
       if (window.confirm('Are you sure you want to complete Triage?')) {
-        await axios
-          .put(`${url}/${order._id}`, { 
+        await axios.put(`${url}/${order._id}`, { 
             triagecomplete: today,
-            duedate: daysWithOutWeekend[12]
+            duedate: duedate
           })
-          .then(
-            daysWithOutWeekend.splice(0, 1),
-          )
-          .catch(error => console.log(error))
+        
+        order.sameasChildren.forEach(child => {
+          const index = triageOrders.findIndex(obj => {
+            return obj._id === child._id
+          })
+          console.log(index)
+          console.log(triageOrders[index])
+          axios.put(`${url}/${child._id}`, { 
+            triagecomplete: today,
+            duedate: duedate
+          })
+        })
         alert(`Order has been marked with triage date of ${today}`)
         daysWithOutWeekend.slice(1, 2);
       }

@@ -1,0 +1,14 @@
+
+.childrenRow {
+    background-color: #ffe6e6 !important;
+}
+
+.removeChildBtn {
+    border: 1px solid black;
+    border-radius: 5px;
+    color: white;
+    background-color: red;
+    height: 20px;
+    width: 20px;
+    font-weight: bolder;
+}

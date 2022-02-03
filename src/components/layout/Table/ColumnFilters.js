@@ -8,7 +8,7 @@ function ColumnFilters(props) {
   let tableHeaders;
   let index = 0;
 
-  if (document.URL.endsWith('/')) {
+  if (document.URL.endsWith('/triage')) {
     tableHeaders = triageTableHeaders
   } else if (document.URL.endsWith('dashboard')) {
     tableHeaders = dashboardTableHeaders
