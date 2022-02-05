@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 import EngineerSelect from './selects/EngineerSelect';
+import { backToTriage, updateDesignComplete } from '../functions/orderStatusFunctions';
 
-function OrderRow(props) {
-    const { triageOrders, order, updateOwner, updateWorkload, updateSameAs, updateTriageComplete, deleteOrder, displayOrderChildren } = props
+function DashboardOrderRow(props) {
+    const { order, updateOwner, updateWorkload, updateSameAs, deleteOrder, displayOrderChildren } = props
     const [ inputValue, setInputValue ] = useState('');
     let index = 0;
 
@@ -52,16 +53,12 @@ function OrderRow(props) {
                 <td></td>
                 <td>{order.salesorder}</td>
                 <td>{order.solineitem}</td>
-                <td className={`sameAsParentCell ${order.sameasChildren.length > 0 ? 'sameAsParentCellWithChildren' : ''}`}>
-                    {(order.child === true || order.sameasChildren.length > 0) ?
-                        <p className=''>{order.sameas}</p> : 
-                        <input type='text' maxLength={9} placeholder='XXXXXX-XX' id={order._id} value={inputValue} onChange={(e) => {updateSameAs(order, e); handleInput(e)}} className='sameAsChildInput sameAsCell columnSearchFilter'></input>
-                    }
-                </td>
+                <td className={`sameAsParentCell ${order.sameasChildren.length > 0 ? 'sameAsParentCellWithChildren' : ''}`}></td>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td><button onClick={() => updateTriageComplete(order, triageOrders)}>COMPLETE</button></td>
+                <td><button onClick={() => updateDesignComplete(order)}>COMPLETE</button></td>
+                <td><button onClick={() => backToTriage(order)}>SEND BACK</button></td>
                 <td><button onClick={() => deleteOrder(order)}>X</button></td>
             </tr>
             {props.children}
@@ -69,4 +66,4 @@ function OrderRow(props) {
     )
 }
 
-export default OrderRow;
+export default DashboardOrderRow;

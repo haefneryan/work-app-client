@@ -9,7 +9,7 @@ import { deleteOrder } from '../functions/orderStatusFunctions';
 import './AllOrders.css';
 import './Dashboard.css';
 import DashboardRow from '../components/DashboardRow';
-import OrderRow from '../components/OrderRow';
+import DashboardOrderRow from '../components/DashboardOrderRow';
 import OrderChild from '../components/OrderChild';
 
 function Dashboard(props) {
@@ -97,8 +97,8 @@ function Dashboard(props) {
                         return (
                             <>
                                 {order.child ? <></> :
-                                    <OrderRow key={order._id} order={order} updateOwner={updateOwner} updateWorkload={updateWorkload} deleteOrder={deleteOrder} displayOrderChildren={displayOrderChildren} > 
-                               
+                                    <DashboardOrderRow key={order._id} order={order} updateOwner={updateOwner} updateWorkload={updateWorkload} deleteOrder={deleteOrder} displayOrderChildren={displayOrderChildren} > 
+                                    
                                     {order.displaySameAsChildren ?
                                         <>
                                             {(order.sameasChildren).map(child => {
@@ -110,7 +110,7 @@ function Dashboard(props) {
                                     :
                                     <></>
                                     }
-                                    </OrderRow>
+                                    </DashboardOrderRow>
                                 }
                             </>
                         )
