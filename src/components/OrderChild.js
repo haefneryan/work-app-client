@@ -3,8 +3,8 @@ import React from 'react';
 import './OrderChildren.css'
 
 function OrderChildren(props) {
-  const { order, child, removeChild } = props;
-  
+  const { child } = props;
+
   return (
     <tr className='childrenRow'>
       <td></td>
@@ -13,12 +13,13 @@ function OrderChildren(props) {
       <td>{child.triageowner}</td>
       <td>{child.owner}</td>
       <td>{child.workload}</td>
-      <td></td>
+      <td>{child.buildtime}</td>
       <td>{child.salesorder}</td>
       <td>{child.solineitem}</td>
       <td>{child.sameas}</td>
-      <td></td>
-      <td></td>
+      <td>{child.triagecomplete}</td>
+      <td>{child.designcomplete}</td>
+      <td>{child.duedate}</td>
       <td></td>
       <td></td>
       <td></td>

@@ -8,7 +8,6 @@ import { deleteOrder } from '../functions/orderStatusFunctions';
 
 import './AllOrders.css';
 import './Dashboard.css';
-import DashboardRow from '../components/DashboardRow';
 import DashboardOrderRow from '../components/DashboardOrderRow';
 import OrderChild from '../components/OrderChild';
 
@@ -39,43 +38,43 @@ function Dashboard(props) {
     const sortColumns = (header) => {
         if (header.sortable === true) {
             dashboardTableHeaders.forEach(value => {
-            if (value !== header) {
-              value.sortAsc = false
-              value.sortDesc = false
-            }
-          })
+                if (value !== header) {
+                value.sortAsc = false
+                value.sortDesc = false
+                }
+            })
     
-          // Sort Ascending
-          if (header.sortAsc === false && header.sortDesc === false) {
-            header.sortAsc = true;
-            setFilteredDashboardOrders([...filteredDashboardOrders.sort((a, b) => {
-              let x = a[header.name];
-              let y = b[header.name];
-        
-              if (x < y) { return -1 } else if (x > y) { return 1 } else { return 0 }
-            })])
-            // Sort Descending
-          } else if (header.sortAsc === true && header.sortDesc === false) {
-            header.sortAsc = false;
-            header.sortDesc = true;
-            setFilteredDashboardOrders([...filteredDashboardOrders.sort((a, b) => {
-              let x = a[header.name];
-              let y = b[header.name];
-        
-              if (x > y) { return -1 } else if (x < y) { return 1 } else { return 0 }
-            })])
-          } else {
-            header.sortAsc = false;
-            header.sortDesc = false;
-            setFilteredDashboardOrders([...filteredDashboardOrders.sort((a, b) => {
-              let x = a._id;
-              let y = b._id;
-        
-              if (x > y) { return 1 } else if (x < y) { return -1;} else { return 0 }
-            })])
-          }
+            // Sort Ascending
+            if (header.sortAsc === false && header.sortDesc === false) {
+                header.sortAsc = true;
+                setFilteredDashboardOrders([...filteredDashboardOrders.sort((a, b) => {
+                let x = a[header.name];
+                let y = b[header.name];
+            
+                if (x < y) { return -1 } else if (x > y) { return 1 } else { return 0 }
+                })])
+                // Sort Descending
+            } else if (header.sortAsc === true && header.sortDesc === false) {
+                header.sortAsc = false;
+                header.sortDesc = true;
+                setFilteredDashboardOrders([...filteredDashboardOrders.sort((a, b) => {
+                let x = a[header.name];
+                let y = b[header.name];
+            
+                if (x > y) { return -1 } else if (x < y) { return 1 } else { return 0 }
+                })])
+            } else {
+                header.sortAsc = false;
+                header.sortDesc = false;
+                setFilteredDashboardOrders([...filteredDashboardOrders.sort((a, b) => {
+                let x = a._id;
+                let y = b._id;
+            
+                if (x > y) { return 1 } else if (x < y) { return -1;} else { return 0 }
+                })])
+            }
         }
-      }
+    }
 
     return (
         <div>
@@ -90,14 +89,11 @@ function Dashboard(props) {
                     <ColumnFilters dashboardTableHeaders={dashboardTableHeaders} filterData={filterData}/>
                 </thead>
                 <tbody>
-                    {/* {filteredDashboardOrders.map(order => {
-                        return <DashboardRow sortColumns={sortColumns} order={order} updateOwner={updateOwner} updateBuildTime={updateBuildTime} />
-                    })} */}
                     {filteredDashboardOrders.map(order => {
                         return (
                             <>
                                 {order.child ? <></> :
-                                    <DashboardOrderRow key={order._id} order={order} updateOwner={updateOwner} updateWorkload={updateWorkload} deleteOrder={deleteOrder} displayOrderChildren={displayOrderChildren} > 
+                                    <DashboardOrderRow key={order._id} order={order} updateOwner={updateOwner} updateBuildTime={updateBuildTime} deleteOrder={deleteOrder} displayOrderChildren={displayOrderChildren} > 
                                     
                                     {order.displaySameAsChildren ?
                                         <>

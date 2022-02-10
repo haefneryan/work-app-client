@@ -36,7 +36,7 @@ const App = () => {
 
   useEffect(() => {
     if(orders.length > 0) {
-      triageOrders.forEach(addProp => {
+      orders.forEach(addProp => {
         addProp.displaySameAsChildren = false
       })
     }
@@ -103,7 +103,6 @@ const App = () => {
           if (window.confirm(`Match Found. Do you want to mark ${order.uniquekey} to be the same as ${x.uniquekey}?`)) {
             let newArray = [...x.sameasChildren, order];
             order.child = true;
-            console.log(order)
             setTriageOrders([...triageOrders], 
               x.sameasChildren.push(order),
               order.workload = 0.1,
@@ -121,9 +120,9 @@ const App = () => {
 
   const displayOrderChildren = (order) => {
     if(order.displaySameAsChildren) {
-      setTriageOrders([...triageOrders], order.displaySameAsChildren = false)
+      setOrders([...orders], order.displaySameAsChildren = false)
     } else {
-      setTriageOrders([...triageOrders], order.displaySameAsChildren = true)
+      setOrders([...orders], order.displaySameAsChildren = true)
     }
   }
 
@@ -156,6 +155,7 @@ const App = () => {
   if(dataLoaded === true && triageOrders !== null) {
     console.log(triageOrders)
     console.log(dashboardOrders)
+    console.log(completedOrders)
     
     return (
       <>
@@ -164,9 +164,9 @@ const App = () => {
           <h1>SCHEDULING TOOL</h1>
           <Routes>
             <Route path='/allorders' element={<AllOrders orders={orders} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateWorkload={updateWorkload} />}></Route>
-            <Route path='/triage' element={<Triage triageOrders={triageOrders} updateWorkload={updateWorkload} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateSameAs={updateSameAs} removeChild={removeChild} displayOrderChildren={displayOrderChildren}/>}></Route>
+            <Route path='/triage' element={<Triage triageOrders={triageOrders} updateWorkload={updateWorkload} updateTriageOwner={updateTriageOwner} updateOwner={updateOwner} updateSameAs={updateSameAs} removeChild={removeChild} displayOrderChildren={displayOrderChildren} />}></Route>
             <Route path='/dashboard' element={<Dashboard dashboardOrders={dashboardOrders} updateOwner={updateOwner} updateBuildTime={updateBuildTime} displayOrderChildren={displayOrderChildren} updateWorkload={updateWorkload} />}></Route>
-            <Route path='/completed' element={<Completed completedOrders={completedOrders} />}></Route>
+            <Route path='/completed' element={<Completed completedOrders={completedOrders} displayOrderChildren={displayOrderChildren}/>}></Route>
             <Route path='/create-new-order' element={<AddOrder />}></Route>
           </Routes>
         </div>

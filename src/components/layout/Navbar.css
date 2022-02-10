@@ -5,6 +5,7 @@ header {
     left: 0;
     right: 0;
     height: 80px;
+    z-index: 99;
 }
 
 header * {
@@ -34,10 +35,8 @@ li {
 
 a {    
     display: inline-block;
-    /* box-sizing: border-box; */
     height: 50%;
     width: 100%;
-    /* margin: auto; */
     padding-top: 3vh;
 }
 

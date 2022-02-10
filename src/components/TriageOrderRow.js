@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import EngineerSelect from './selects/EngineerSelect';
 
@@ -66,7 +66,7 @@ function TriageOrderRow(props) {
                 <td></td>
                 <td></td>
                 <td><button onClick={() => updateTriageComplete(order, triageOrders)}>COMPLETE</button></td>
-                <td><button onClick={() => deleteOrder(order)}>X</button></td>
+                <td><button disabled onClick={() => deleteOrder(order)}>X</button></td>
             </tr>
             {props.children}
         </>

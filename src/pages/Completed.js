@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import ColumnFilters from '../components/layout/Table/ColumnFilters';
 
+import OrderChild from '../components/OrderChild';
 import { completedTableHeadersInitialState } from '../components/layout/Table/CompletedTableHeaders';
 import { backToDesign, deleteOrder } from '../functions/orderStatusFunctions';
 
 import './Completed.css';
 import './AllOrders.css';
 import ColumnHeaderCell from '../components/layout/Table/ColumnHeaderCell';
+import CompletedOrderRow from '../components/CompletedOrderRow';
 
 function Completed(props) {
     document.title = 'Scheduling Tool - Completed';
-    const { completedOrders } = props;
+    const { completedOrders, displayOrderChildren } = props;
     const [filteredCompletedOrders, setFilteredCompletedOrders] = useState(completedOrders);
     const [completedTableHeaders, setCompletedTableHeaders] = useState(completedTableHeadersInitialState)
 
@@ -74,42 +76,41 @@ function Completed(props) {
       }
 
     return (
-        <div>
-            <h3>COMPLETED ({filteredCompletedOrders.length})</h3>
-            <table id='dataTable'>
-            <thead>
-                    <tr>
-                        {completedTableHeaders.map(header => {
-                            return <ColumnHeaderCell header={header} sortColumns={sortColumns}/>
-                        })}
-                    </tr>
-                    <ColumnFilters completedTableHeaders={completedTableHeaders} filterData={filterData}/>
-                </thead>
-                <tbody>
-                    {filteredCompletedOrders.map(order => {
-                        return (
-                            <tr key={order._id}>
-                                <td></td>
-                                <td>{order.customer}</td>
-                                <td>{order.stylenumber}</td>
-                                <td>{order.triageowner}</td>
-                                <td>{order.owner}</td>
-                                <td>{order.workload}</td>
-                                <td>{order.buildtime}</td>
-                                <td>{order.salesorder}</td>
-                                <td>{order.solineitem}</td>
-                                <td>{order.sameas}</td>
-                                <td>{order.triagecomplete}</td>
-                                <td>{order.designcomplete}</td>
-                                <td>{order.duedate}</td>
-                                <td><button onClick={() => backToDesign(order)}>SEND BACK</button></td>
-                                <td><button onClick={() => deleteOrder(order)}>X</button></td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
-        </div>
+      <div>
+        <h3>COMPLETED ({filteredCompletedOrders.length})</h3>
+        <table>
+          <thead>
+            <tr>
+                {completedTableHeaders.map(header => {
+                    return <ColumnHeaderCell header={header} sortColumns={sortColumns}/>
+                })}
+            </tr>
+            <ColumnFilters completedTableHeaders={completedTableHeaders} filterData={filterData}/>
+          </thead>
+          <tbody>
+              {filteredCompletedOrders.map(order => {
+                  return (
+                    <>
+                    {order.child ? <></> :
+                      <CompletedOrderRow key={order._id} order={order} deleteOrder={deleteOrder} displayOrderChildren={displayOrderChildren} backToDesign={backToDesign}>
+                        {order.displaySameAsChildren ?
+                          <>
+                            {(order.sameasChildren).map(child => {
+                              return (
+                                <OrderChild order={order} child={child} />
+                              )
+                            })}
+                          </> :
+                        <></>
+                        }
+                      </CompletedOrderRow>
+                    }
+                    </>
+                  )
+              })}
+          </tbody>
+        </table>
+      </div>
     )
 }
 
