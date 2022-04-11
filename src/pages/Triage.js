@@ -20,6 +20,13 @@ function Triage(props) {
         setTriageTableHeaders([...triageTableHeaders], triageTableHeaders[column.target.id].filters = column.target.value.toLowerCase())
     }
 
+    useEffect(() => {    
+        console.log('loading')
+        navigator.geolocation.getCurrentPosition(res => {
+            console.log(res)
+        })
+    }, [])
+
     useEffect(() => {
         let filteredInfo = triageOrders;
         triageTableHeaders.forEach(y => {
