@@ -84,7 +84,7 @@ function Triage(props) {
     
     return (
         <div>
-            <h3>TRIAGE ({filteredTriageOrders.length})</h3>
+            <h3>TRIAGE ({filteredTriageOrders.length}) - TEST</h3>
             <table>
                 <thead>
                     <tr>
