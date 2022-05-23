@@ -23,11 +23,12 @@ ul {
     align-items: center;
     box-sizing: border-box;
     flex-wrap: nowrap;
+    justify-content: space-evenly;
 }
 
 li {
     height: 100%;
-    width: 15%;
+    width: 25%;
     box-sizing: border-box;
     padding: auto;
     display: inline-block;
