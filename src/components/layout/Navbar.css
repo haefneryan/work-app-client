@@ -36,7 +36,6 @@ a {
     height: 100%;
     width: 100%;
     box-sizing: border-box;
-    margin-top: 25px;
 }
 
 li:hover {
@@ -46,4 +45,12 @@ li:hover {
 
 nav {
     height: 100%;
+}
+
+.active {
+    background-color: #0099ff;
+}
+
+p {
+    margin-top: 25px;
 }

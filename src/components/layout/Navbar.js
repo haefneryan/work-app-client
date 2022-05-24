@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import classes from "./Navbar.css";
 
 function Navbar(props) {
@@ -9,16 +9,24 @@ function Navbar(props) {
         <ul>
           {/* <li><Link to='/'>ALL ORDERS</Link></li> */}
           <li>
-            <Link to="/triage">TRIAGE ({triageOrders.length})</Link>
+            <NavLink to="/triage">
+              <p>TRIAGE ({triageOrders.length})</p>
+            </NavLink>
           </li>
           <li>
-            <Link to="/dashboard">DASHBOARD ({dashboardOrders.length})</Link>
+            <NavLink to="/dashboard">
+              <p>DASHBOARD ({dashboardOrders.length})</p>
+            </NavLink>
           </li>
           <li>
-            <Link to="/completed">COMPLETED ({completedOrders.length})</Link>
+            <NavLink to="/completed">
+              <p>COMPLETED ({completedOrders.length})</p>
+            </NavLink>
           </li>
           <li>
-            <Link to="/create-new-order">CREATE NEW ORDER</Link>
+            <NavLink to="/create-new-order">
+              <p>CREATE NEW ORDER</p>
+            </NavLink>
           </li>
         </ul>
       </nav>
