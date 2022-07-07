@@ -123,9 +123,13 @@ function Triage(props) {
       <table>
         <thead>
           <tr>
-            {triageTableHeaders.map((header) => {
+            {triageTableHeaders.map((header, index) => {
               return (
-                <ColumnHeaderCell sortColumns={sortColumns} header={header} />
+                <ColumnHeaderCell
+                  sortColumns={sortColumns}
+                  header={header}
+                  key={index}
+                />
               );
             })}
           </tr>
@@ -164,6 +168,7 @@ function Triage(props) {
                               updateTriageOwner={updateTriageOwner}
                               updateOwner={updateOwner}
                               removeChild={removeChild}
+                              key={order._id}
                             />
                           );
                         })}
