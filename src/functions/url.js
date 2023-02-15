@@ -1,1 +1,2 @@
-export const url = 'https://stormy-plateau-67088.herokuapp.com';
+export const url =
+  "https://o1uftzbv2g.execute-api.us-east-1.amazonaws.com/default";
