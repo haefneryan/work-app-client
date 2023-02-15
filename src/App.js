@@ -59,43 +59,47 @@ const App = () => {
   };
 
   const updateTriageOwner = (order, e) => {
-    setOrders([...orders], (order.triageowner = e.target.value));
-    console.log(`${url}`);
-    console.log(order);
-    // axios.put(url, order);
+    setOrders([...orders], (order.triageOwner = e.target.value));
+    updateOrder(order);
+    // CHILDREN CODE
     // order.sameAsChildren.forEach((child) => {
-    //   setOrders([...orders], (child.triageowner = e.target.value));
+    //   setOrders([...orders], (child.triageOwner = e.target.value));
     //   let newArray = order.sameAsChildren;
-    //   newArray[newArray.indexOf(child)].triageowner = e.target.value;
-    // axios.put(`${url}`, {
-    //   sameAsChildren: newArray,
-    //   triageowner: e.target.value,
-    // });
-    // axios.put(`${url}/${order._id}`, { sameAsChildren: newArray });
-    // axios.put(`${url}/${child._id}`, { triageowner: e.target.value });
+    //   newArray[newArray.indexOf(child)].triageOwner = e.target.value;
+    //   axios.put(url, {
+    //     sameAsChildren: newArray,
+    //     triageOwner: e.target.value,
+    //   });
+    //   axios.put(url, { sameAsChildren: newArray });
+    //   axios.put(url, { triageOwner: e.target.value });
     // });
   };
 
   const updateOwner = (order, e) => {
-    //   setOrders([...orders], (order.owner = e.target.value));
-    //   axios.put(`${url}/${order._id}`, { owner: e.target.value });
-    //   order.sameAsChildren.forEach((child) => {
-    //     setOrders([...orders], (child.owner = e.target.value));
-    //     let newArray = order.sameAsChildren;
-    //     newArray[newArray.indexOf(child)].owner = e.target.value;
-    //     axios.put(`${url}/${order._id}`, { sameAsChildren: newArray });
-    //     axios.put(`${url}/${child._id}`, { owner: e.target.value });
-    //   });
+    setOrders([...orders], (order.owner = e.target.value));
+    updateOrder(order);
+    // CHILDREN CODE
+    // order.sameAsChildren.forEach((child) => {
+    //   setOrders([...orders], (child.owner = e.target.value));
+    //   let newArray = order.sameAsChildren;
+    //   newArray[newArray.indexOf(child)].owner = e.target.value;
+    //   axios.put(url, { sameAsChildren: newArray });
+    //   axios.put(url, { owner: e.target.value });
+    // });
   };
 
   const updateWorkload = (order, e) => {
-    //   setOrders([...orders], (order.workload = e.target.value));
-    //   axios.put(`${url}`, { workload: e.target.value });
+    setOrders([...orders], (order.workload = e.target.value));
+    updateOrder(order);
   };
 
   const updateBuildTime = (order, e) => {
-    //   setOrders([...orders], (order.buildtime = e.target.value));
-    //   axios.put(`${url}/${order._id}`, { buildtime: e.target.value });
+    setOrders([...orders], (order.buildTime = e.target.value));
+    updateOrder(order);
+  };
+
+  const updateOrder = (order) => {
+    axios.put(url, order);
   };
 
   const updateSameAs = (order, e) => {
@@ -164,29 +168,26 @@ const App = () => {
   };
 
   const filterOrderStatus = (orders) => {
-    console.log(orders);
     setTriageOrders(
       orders.filter(
         (x) => x.triageComplete === null && x.designComplete === null
       )
     );
     setDashboardOrders(
-      orders.filter(
-        (x) => x.triageComplete !== null && x.designComplete === null
-      )
+      orders.filter((x) => {
+        return x.triageComplete !== null && x.designComplete === null;
+      })
     );
     setCompletedOrders(
-      orders.filter((x) => {
-        console.log(x);
-        return x.triageComplete !== null && x.designComplete !== null;
-      })
+      orders.filter(
+        (x) => x.triageComplete !== null && x.designComplete !== null
+      )
     );
   };
 
   if (dataLoaded === false) return <p>loading...</p>;
 
   if (dataLoaded === true && triageOrders !== null) {
-    console.log("here");
     return (
       <>
         <div className="App">

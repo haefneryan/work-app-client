@@ -52,10 +52,10 @@ function TriageOrderRow(props) {
           )}
         </td>
         <td>{order.customer}</td>
-        <td>{order.stylenumber}</td>
+        <td>{order.styleNumber}</td>
         <td>
           <select
-            defaultValue={order.triageowner}
+            defaultValue={order.triageOwner}
             onChange={(e) => updateTriageOwner(order, e)}
           >
             <EngineerSelect />
@@ -84,8 +84,8 @@ function TriageOrderRow(props) {
           )}
         </td>
         <td></td>
-        <td>{order.salesorder}</td>
-        <td>{order.solineitem}</td>
+        <td>{order.salesOrder}</td>
+        <td>{order.soLineItem}</td>
         <td
           className={`sameAsParentCell ${
             order.sameAsChildren.length > 0
@@ -97,6 +97,7 @@ function TriageOrderRow(props) {
             <p className="">{order.sameas}</p>
           ) : (
             <input
+              disabled
               type="text"
               maxLength={9}
               placeholder="XXXXXX-XX"

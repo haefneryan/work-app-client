@@ -114,7 +114,11 @@ function Completed(props) {
           <tr>
             {completedTableHeaders.map((header) => {
               return (
-                <ColumnHeaderCell header={header} sortColumns={sortColumns} />
+                <ColumnHeaderCell
+                  header={header}
+                  sortColumns={sortColumns}
+                  key={header.index}
+                />
               );
             })}
           </tr>
@@ -126,7 +130,7 @@ function Completed(props) {
         <tbody>
           {filteredCompletedOrders.map((order) => {
             return (
-              <>
+              <React.Fragment key={order.id}>
                 {order.child ? (
                   <></>
                 ) : (
@@ -148,7 +152,7 @@ function Completed(props) {
                     )}
                   </CompletedOrderRow>
                 )}
-              </>
+              </React.Fragment>
             );
           })}
         </tbody>

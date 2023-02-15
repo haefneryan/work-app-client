@@ -14,14 +14,17 @@ export const backToTriage = (order) => {
         x.duedate = null;
       });
     }
-    axios.put(`${url}/${order._id}`, {
-      triagecomplete: null,
-      duedate: null,
+    let newOrder = {
+      ...order,
+      triageComplete: null,
+      dueDate: null,
       sameAsChildren: newArray,
-    });
-    order.sameAsChildren.forEach((child) => {
-      axios.put(`${url}/${child._id}`, { triagecomplete: null, duedate: null });
-    });
+    };
+    axios.put(url, newOrder);
+    // CHILDREN CODE
+    // order.sameAsChildren.forEach((o) => {
+    //   axios.put(url, { triagecomplete: null, duedate: null });
+    // });
     alert("Order was sent back to triage");
   }
 };
@@ -34,16 +37,17 @@ export const backToDesign = (order) => {
     let newArray = order.sameAsChildren;
     if (order.sameAsChildren.length > 0) {
       newArray.forEach((x) => {
-        x.designcomplete = null;
+        x.designComplete = null;
       });
     }
-    axios.put(`${url}/${order._id}`, {
-      designcomplete: null,
-      sameAsChildren: newArray,
-    });
-    order.sameAsChildren.forEach((child) => {
-      axios.put(`${url}/${child._id}`, { designcomplete: null });
-    });
+    let newOrder = {
+      ...order,
+      designComplete: null,
+    };
+    axios.put(url, newOrder);
+    // order.sameAsChildren.forEach(() => {
+    //   axios.put(url, { designcomplete: null });
+    // });
     alert("Order was sent back to Design");
   }
 };
@@ -69,7 +73,7 @@ for (
 
 export const updateTriageComplete = async (order) => {
   let today = getToday();
-  if (order.triageowner === "None" || order.triageowner === null) {
+  if (order.triageOwner === "None" || order.triageOwner === null) {
     alert("Please select a triage owner");
   } else if (order.workload === null || order.workload.length === 0) {
     alert("Please enter a workload");
@@ -77,22 +81,24 @@ export const updateTriageComplete = async (order) => {
     let duedate = daysWithOutWeekend[12];
     let newArray = [];
     if (window.confirm("Are you sure you want to complete Triage?")) {
-      order.sameAsChildren.forEach((child) => {
-        child.triagecomplete = today;
-        child.duedate = duedate;
-        child.buildtime = 0.1;
-        newArray = [...newArray, child];
-        axios.put(`${url}/${child._id}`, {
-          triagecomplete: today,
-          duedate: duedate,
-          buildtime: 0.1,
-        });
-      });
-      await axios.put(`${url}/${order._id}`, {
-        triagecomplete: today,
-        duedate: duedate,
+      // order.sameAsChildren.forEach((child) => {
+      //   child.triagecomplete = today;
+      //   child.duedate = duedate;
+      //   child.buildtime = 0.1;
+      //   newArray = [...newArray, child];
+      //   axios.put(url, {
+      //     triageComplete: today,
+      //     dueDate: duedate,
+      //     buildTime: 0.1,
+      //   });
+      // });
+      let newOrder = {
+        ...order,
+        triageComplete: today,
+        dueDate: duedate,
         sameAsChildren: newArray,
-      });
+      };
+      await axios.put(url, newOrder);
       alert(`Order has been marked with triage date of ${today}`);
       daysWithOutWeekend.slice(1, 2);
     }
@@ -104,9 +110,9 @@ export const updateDesignComplete = async (order) => {
   if (order.owner === "None") {
     alert("Please select an owner");
   } else if (
-    order.buildtime === undefined ||
-    order.buildtime === "" ||
-    order.buildtime === null
+    order.buildTime === undefined ||
+    order.buildTime === "" ||
+    order.buildTime === null
   ) {
     alert("Please enter a build time");
   } else {
@@ -115,17 +121,19 @@ export const updateDesignComplete = async (order) => {
       "Are you sure you want to complete this order from Design?"
     );
     if (r) {
-      order.sameAsChildren.forEach((child) => {
-        child.designcomplete = today;
-        newArray = [...newArray, child];
-        axios.put(`${url}/${child._id}`, {
-          designcomplete: today,
-        });
-      });
-      await axios.put(`${url}/${order._id}`, {
-        designcomplete: today,
+      // order.sameAsChildren.forEach((child) => {
+      //   child.designComplete = today;
+      //   newArray = [...newArray, child];
+      //   axios.put(url, {
+      //     designComplete: today,
+      //   });
+      // });
+      let newOrder = {
+        ...order,
+        designComplete: today,
         sameAsChildren: newArray,
-      });
+      };
+      await axios.put(url, newOrder);
       alert("Order has been completed from design");
     }
   }

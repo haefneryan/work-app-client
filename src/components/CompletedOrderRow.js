@@ -20,13 +20,13 @@ function CompletedOrderRow(props) {
           )}
         </td>
         <td>{order.customer}</td>
-        <td>{order.stylenumber}</td>
-        <td>{order.triageowner}</td>
+        <td>{order.styleNumber}</td>
+        <td>{order.triageOwner}</td>
         <td>{order.owner}</td>
         <td>{order.workload}</td>
-        <td>{order.buildtime}</td>
-        <td>{order.salesorder}</td>
-        <td>{order.solineitem}</td>
+        <td>{order.buildTime}</td>
+        <td>{order.salesOrder}</td>
+        <td>{order.soLineItem}</td>
         <td
           className={`sameAsParentCell ${
             order.sameAsChildren.length > 0
@@ -34,9 +34,9 @@ function CompletedOrderRow(props) {
               : ""
           }`}
         ></td>
-        <td>{order.triagecomplete}</td>
-        <td>{order.designcomplete}</td>
-        <td>{order.duedate}</td>
+        <td>{order.triageComplete}</td>
+        <td>{order.designComplete}</td>
+        <td>{order.dueDate}</td>
         <td>
           <button onClick={() => backToDesign(order)}>SEND BACK</button>
         </td>

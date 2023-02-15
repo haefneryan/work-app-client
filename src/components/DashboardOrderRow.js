@@ -42,8 +42,8 @@ function DashboardOrderRow(props) {
           )}
         </td>
         <td>{order.customer}</td>
-        <td>{order.stylenumber}</td>
-        <td>{order.triageowner}</td>
+        <td>{order.styleNumber}</td>
+        <td>{order.triageOwner}</td>
         <td>
           <select
             defaultValue={order.owner}
@@ -59,7 +59,7 @@ function DashboardOrderRow(props) {
               type="text"
               min="1"
               max="1000"
-              defaultValue={order.buildtime}
+              defaultValue={order.buildTime}
               onChange={(e) => updateBuildTime(order, e)}
               className="workload"
             ></input>
@@ -67,12 +67,12 @@ function DashboardOrderRow(props) {
             <input
               disabled
               className="workload"
-              value={order.buildtime}
+              value={order.buildTime}
             ></input>
           )}
         </td>
-        <td>{order.salesorder}</td>
-        <td>{order.solineitem}</td>
+        <td>{order.salesOrder}</td>
+        <td>{order.soLineItem}</td>
         <td
           className={`sameAsParentCell ${
             order.sameAsChildren.length > 0
@@ -80,9 +80,9 @@ function DashboardOrderRow(props) {
               : ""
           }`}
         ></td>
-        <td>{order.triagecomplete}</td>
+        <td>{order.triageComplete}</td>
         <td></td>
-        <td className={`${checkDueDate(order)}`}>{order.duedate}</td>
+        <td className={`${checkDueDate(order)}`}>{order.dueDate}</td>
         <td>
           <button onClick={() => updateDesignComplete(order)}>COMPLETE</button>
         </td>

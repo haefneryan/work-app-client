@@ -11,7 +11,6 @@ import {
 import ColumnHeaderCell from "../components/layout/Table/ColumnHeaderCell";
 
 import "./Triage.css";
-// import './AllOrders.css';
 
 function Triage(props) {
   document.title = "Scheduling Tool - Triage";
@@ -142,12 +141,12 @@ function Triage(props) {
         <tbody>
           {filteredTriageOrders.map((order) => {
             return (
-              <>
+              <React.Fragment key={order.id}>
                 {order.child ? (
                   <></>
                 ) : (
                   <TriageOrderRow
-                    key={order._id}
+                    key={order.id}
                     order={order}
                     updateTriageOwner={updateTriageOwner}
                     updateOwner={updateOwner}
@@ -160,7 +159,7 @@ function Triage(props) {
                   >
                     {order.displaySameAsChildren ? (
                       <>
-                        {order.sameasChildren.map((child) => {
+                        {order.sameAsChildren.map((child) => {
                           return (
                             <TriageOrderChild
                               order={order}
@@ -168,7 +167,7 @@ function Triage(props) {
                               updateTriageOwner={updateTriageOwner}
                               updateOwner={updateOwner}
                               removeChild={removeChild}
-                              key={order._id}
+                              key={order.id}
                             />
                           );
                         })}
@@ -178,7 +177,7 @@ function Triage(props) {
                     )}
                   </TriageOrderRow>
                 )}
-              </>
+              </React.Fragment>
             );
           })}
         </tbody>
