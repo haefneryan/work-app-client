@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "homepage": "https://haefneryan.github.io/work-app-client",
+  "homepage": "https://haefneryan.github.io/work-app-client/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
