@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-
+import { updateOrder } from "../functions/orderStatusFunctions";
 import EngineerSelect from "./selects/EngineerSelect";
 
 function TriageOrderRow(props) {
   const {
     triageOrders,
+    setTriageOrders,
     order,
-    updateTriageOwner,
-    updateOwner,
-    updateWorkload,
     updateSameAs,
     updateTriageComplete,
     deleteOrder,
@@ -20,6 +18,33 @@ function TriageOrderRow(props) {
   const handleInput = (e) => {
     const formattedSameAsNumber = formatSameAsNumber(e.target.value, e);
     setInputValue(formattedSameAsNumber);
+  };
+
+  const localUpdateTriageOwner = (order, e) => {
+    order.triageOwner = e.target.value;
+    let index = triageOrders.findIndex((x) => x.id === order.id);
+    let newTriageOrders = triageOrders;
+    newTriageOrders[index] = order;
+    setTriageOrders(newTriageOrders);
+    updateOrder(order);
+  };
+
+  const localUpdateOwner = (order, e) => {
+    order.owner = e.target.value;
+    let index = triageOrders.findIndex((x) => x.id === order.id);
+    let newTriageOrders = triageOrders;
+    newTriageOrders[index] = order;
+    setTriageOrders(newTriageOrders);
+    updateOrder(order);
+  };
+
+  const localUpdateWorkload = (order, e) => {
+    order.workload = e.target.value;
+    let index = triageOrders.findIndex((x) => x.id === order.id);
+    let newTriageOrders = triageOrders;
+    newTriageOrders[index] = order;
+    setTriageOrders(newTriageOrders);
+    updateOrder(order);
   };
 
   function formatSameAsNumber(value, e) {
@@ -56,7 +81,7 @@ function TriageOrderRow(props) {
         <td>
           <select
             defaultValue={order.triageOwner}
-            onChange={(e) => updateTriageOwner(order, e)}
+            onChange={(e) => localUpdateTriageOwner(order, e)}
           >
             <EngineerSelect />
           </select>
@@ -64,7 +89,7 @@ function TriageOrderRow(props) {
         <td>
           <select
             defaultValue={order.owner}
-            onChange={(e) => updateOwner(order, e)}
+            onChange={(e) => localUpdateOwner(order, e)}
           >
             <EngineerSelect />
           </select>
@@ -75,8 +100,9 @@ function TriageOrderRow(props) {
               type="text"
               min="1"
               max="1000"
+              // value={order.workload}
               defaultValue={order.workload}
-              onChange={(e) => updateWorkload(order, e)}
+              onChange={(e) => localUpdateWorkload(order, e)}
               className="workload"
             ></input>
           ) : (
@@ -115,9 +141,7 @@ function TriageOrderRow(props) {
         <td></td>
         <td></td>
         <td>
-          <button onClick={() => updateTriageComplete(order, triageOrders)}>
-            COMPLETE
-          </button>
+          <button onClick={() => updateTriageComplete(order)}>COMPLETE</button>
         </td>
         <td>
           <button disabled onClick={() => deleteOrder(order)}>

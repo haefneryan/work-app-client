@@ -15,9 +15,10 @@ function Dashboard(props) {
   document.title = "Scheduling Tool - Dashboard";
   const {
     dashboardOrders,
-    updateOwner,
-    updateBuildTime,
+    setDashboardOrders,
     displayOrderChildren,
+    updateDesignComplete,
+    backToTriage,
   } = props;
   const [filteredDashboardOrders, setFilteredDashboardOrders] =
     useState(dashboardOrders);
@@ -143,10 +144,12 @@ function Dashboard(props) {
                   <DashboardOrderRow
                     key={order._id}
                     order={order}
-                    updateOwner={updateOwner}
-                    updateBuildTime={updateBuildTime}
                     deleteOrder={deleteOrder}
                     displayOrderChildren={displayOrderChildren}
+                    updateDesignComplete={updateDesignComplete}
+                    backToTriage={backToTriage}
+                    dashboardOrders={dashboardOrders}
+                    setDashboardOrders={setDashboardOrders}
                   >
                     {order.displaySameAsChildren ? (
                       <>
@@ -155,7 +158,6 @@ function Dashboard(props) {
                             <OrderChild
                               order={order}
                               child={child}
-                              updateOwner={updateOwner}
                               key={child}
                             />
                           );

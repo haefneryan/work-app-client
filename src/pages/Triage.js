@@ -4,10 +4,7 @@ import TriageOrderRow from "../components/TriageOrderRow";
 import TriageOrderChild from "../components/TriageOrderChild";
 
 import { triageTableHeadersInitialState } from "../components/layout/Table/TriageTableHeaders";
-import {
-  updateTriageComplete,
-  deleteOrder,
-} from "../functions/orderStatusFunctions";
+import { deleteOrder } from "../functions/orderStatusFunctions";
 import ColumnHeaderCell from "../components/layout/Table/ColumnHeaderCell";
 
 import "./Triage.css";
@@ -16,12 +13,11 @@ function Triage(props) {
   document.title = "Scheduling Tool - Triage";
   const {
     triageOrders,
-    updateWorkload,
-    updateTriageOwner,
-    updateOwner,
+    setTriageOrders,
     updateSameAs,
     removeChild,
     displayOrderChildren,
+    updateTriageComplete,
   } = props;
   const [filteredTriageOrders, setFilteredTriageOrders] =
     useState(triageOrders);
@@ -148,14 +144,12 @@ function Triage(props) {
                   <TriageOrderRow
                     key={order.id}
                     order={order}
-                    updateTriageOwner={updateTriageOwner}
-                    updateOwner={updateOwner}
-                    updateWorkload={updateWorkload}
                     updateSameAs={updateSameAs}
                     updateTriageComplete={updateTriageComplete}
                     deleteOrder={deleteOrder}
                     displayOrderChildren={displayOrderChildren}
                     triageOrders={triageOrders}
+                    setTriageOrders={setTriageOrders}
                   >
                     {order.displaySameAsChildren ? (
                       <>
@@ -164,8 +158,6 @@ function Triage(props) {
                             <TriageOrderChild
                               order={order}
                               child={child}
-                              updateTriageOwner={updateTriageOwner}
-                              updateOwner={updateOwner}
                               removeChild={removeChild}
                               key={order.id}
                             />

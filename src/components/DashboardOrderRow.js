@@ -1,19 +1,19 @@
 import React from "react";
-
+import { updateOrder } from "../functions/orderStatusFunctions";
 import EngineerSelect from "./selects/EngineerSelect";
-import {
-  backToTriage,
-  updateDesignComplete,
-} from "../functions/orderStatusFunctions";
 import { getToday } from "../functions/getToday";
 
 function DashboardOrderRow(props) {
   const {
+    dashboardOrders,
+    setDashboardOrders,
     order,
     updateOwner,
     updateBuildTime,
     deleteOrder,
     displayOrderChildren,
+    updateDesignComplete,
+    backToTriage,
   } = props;
   let index = 0;
 
@@ -24,6 +24,24 @@ function DashboardOrderRow(props) {
     } else if (order.duedate < today) {
       return "dueDateLate";
     }
+  };
+
+  const localUpdateOwner = (order, e) => {
+    order.owner = e.target.value;
+    let index = dashboardOrders.findIndex((x) => x.id === order.id);
+    let newDasboardOrders = dashboardOrders;
+    newDasboardOrders[index] = order;
+    setDashboardOrders([...newDasboardOrders]);
+    updateOrder(order);
+  };
+
+  const localUpdateBuildTime = (order, e) => {
+    order.buildTime = e.target.value;
+    let index = dashboardOrders.findIndex((x) => x.id === order.id);
+    let newDasboardOrders = dashboardOrders;
+    newDasboardOrders[index] = order;
+    setDashboardOrders([...newDasboardOrders]);
+    updateOrder(order);
   };
 
   return (
@@ -47,7 +65,7 @@ function DashboardOrderRow(props) {
         <td>
           <select
             defaultValue={order.owner}
-            onChange={(e) => updateOwner(order, e)}
+            onChange={(e) => localUpdateOwner(order, e)}
           >
             <EngineerSelect />
           </select>
@@ -60,7 +78,7 @@ function DashboardOrderRow(props) {
               min="1"
               max="1000"
               defaultValue={order.buildTime}
-              onChange={(e) => updateBuildTime(order, e)}
+              onChange={(e) => localUpdateBuildTime(order, e)}
               className="workload"
             ></input>
           ) : (

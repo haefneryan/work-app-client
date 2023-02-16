@@ -3,7 +3,7 @@ import ColumnFilters from "../components/layout/Table/ColumnFilters";
 
 import OrderChild from "../components/OrderChild";
 import { completedTableHeadersInitialState } from "../components/layout/Table/CompletedTableHeaders";
-import { backToDesign, deleteOrder } from "../functions/orderStatusFunctions";
+import { deleteOrder } from "../functions/orderStatusFunctions";
 
 import "./Completed.css";
 import "./AllOrders.css";
@@ -12,7 +12,7 @@ import CompletedOrderRow from "../components/CompletedOrderRow";
 
 function Completed(props) {
   document.title = "Scheduling Tool - Completed";
-  const { completedOrders, displayOrderChildren } = props;
+  const { completedOrders, displayOrderChildren, backToDesign } = props;
   const [filteredCompletedOrders, setFilteredCompletedOrders] =
     useState(completedOrders);
   const [completedTableHeaders, setCompletedTableHeaders] = useState(
