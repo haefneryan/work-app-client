@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/work-app-client/static/css/main.6fa55944.chunk.css",
-    "main.js": "/work-app-client/static/js/main.d0778876.chunk.js",
-    "main.js.map": "/work-app-client/static/js/main.d0778876.chunk.js.map",
+    "main.js": "/work-app-client/static/js/main.227f96aa.chunk.js",
+    "main.js.map": "/work-app-client/static/js/main.227f96aa.chunk.js.map",
     "runtime-main.js": "/work-app-client/static/js/runtime-main.bec85522.js",
     "runtime-main.js.map": "/work-app-client/static/js/runtime-main.bec85522.js.map",
-    "static/js/2.46778ec1.chunk.js": "/work-app-client/static/js/2.46778ec1.chunk.js",
-    "static/js/2.46778ec1.chunk.js.map": "/work-app-client/static/js/2.46778ec1.chunk.js.map",
+    "static/js/2.e57a61a3.chunk.js": "/work-app-client/static/js/2.e57a61a3.chunk.js",
+    "static/js/2.e57a61a3.chunk.js.map": "/work-app-client/static/js/2.e57a61a3.chunk.js.map",
     "index.html": "/work-app-client/index.html",
     "static/css/main.6fa55944.chunk.css.map": "/work-app-client/static/css/main.6fa55944.chunk.css.map",
-    "static/js/2.46778ec1.chunk.js.LICENSE.txt": "/work-app-client/static/js/2.46778ec1.chunk.js.LICENSE.txt"
+    "static/js/2.e57a61a3.chunk.js.LICENSE.txt": "/work-app-client/static/js/2.e57a61a3.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.bec85522.js",
-    "static/js/2.46778ec1.chunk.js",
+    "static/js/2.e57a61a3.chunk.js",
     "static/css/main.6fa55944.chunk.css",
-    "static/js/main.d0778876.chunk.js"
+    "static/js/main.227f96aa.chunk.js"
   ]
 }
