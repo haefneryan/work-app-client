@@ -4,7 +4,8 @@ import StyleNumberSelect from "../components/selects/StyleNumbersSelect";
 import { url } from "../functions/url";
 import axios from "axios";
 
-function AddOrder() {
+function AddOrder(props) {
+  const { triageOrders, setTriageOrders } = props;
   const [customer, setCustomer] = useState("");
   const [styleNumber, setStyleNumber] = useState("Style Number 1");
 
@@ -13,27 +14,27 @@ function AddOrder() {
       alert("Please enter a Customer name");
     } else {
       alert("Order has been created!");
-      axios
-        .post(url, {
-          customer: customer,
-          styleNumber: styleNumber,
-          triageOwner: "None",
-          owner: "None",
-          workload: 2,
-          buildTime: null,
-          triageComplete: null,
-          designComplete: null,
-          dueDate: null,
-          salesOrder: "-",
-          soLineItem: "10",
-          sameAs: false,
-          sameAsChildren: [],
-          child: false,
-          uniqueKey: null,
-        })
-        .catch((error) => console.log(error));
+      const newOrder = {
+        customer: customer,
+        styleNumber: styleNumber,
+        triageOwner: "None",
+        owner: "None",
+        workload: 2,
+        buildTime: null,
+        triageComplete: null,
+        designComplete: null,
+        dueDate: null,
+        salesOrder: "-",
+        soLineItem: "10",
+        sameAs: false,
+        sameAsChildren: [],
+        child: false,
+        uniqueKey: null,
+      };
+      axios.post(url, newOrder).catch((error) => console.log(error));
       setCustomer("");
       setStyleNumber("Style Number 1");
+      setTriageOrders([...triageOrders, newOrder]);
     }
   };
 

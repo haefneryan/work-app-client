@@ -346,7 +346,15 @@ const App = () => {
                 />
               }
             ></Route>
-            <Route path="/create-new-order" element={<AddOrder />}></Route>
+            <Route
+              path="/create-new-order"
+              element={
+                <AddOrder
+                  triageOrders={triageOrders}
+                  setTriageOrders={setTriageOrders}
+                />
+              }
+            ></Route>
           </Routes>
         </div>
       </>
